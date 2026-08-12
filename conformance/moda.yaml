@@ -2,7 +2,7 @@ framework:
   id: "moda"
   required_version: "^1.0.0"
   verified_against: "1.0.0"
-  verified_commit: "987a8def70925b69983af4417518275f8fefd375"
+  verified_commit: "fd56189ecd995736de14aa7f1340130a989b792a"
 
 subject:
   id: "moda"
@@ -11,8 +11,8 @@ subject:
   adoption_mode: "native"
 
 assessment:
-  claim_stage: "mapped"
-  result: "partial"
+  claim_stage: "verified"
+  result: "conformant"
 
 controls:
   problem_and_purpose:
@@ -43,9 +43,8 @@ controls:
     status: "satisfied"
     evidence: ["CONSTITUTION.md#6-context-and-state-are-designed", "SPEC.md#49-state-context-and-knowledge"]
   quality_and_evaluation:
-    status: "partial"
-    evidence: ["docs/evaluation-and-safety.md"]
-    gaps: ["Executable validator and evaluation fixtures are planned but not present in the audited commit."]
+    status: "satisfied"
+    evidence: ["docs/evaluation-and-safety.md", "scripts/validate_moda.py", "tests/test_validate_moda.py", "examples/minimal-methodology/", ".github/workflows/validate.yml"]
   safety_security_and_privacy:
     status: "satisfied"
     evidence: ["SPEC.md#411-safety-security-and-privacy", "docs/evaluation-and-safety.md"]
@@ -56,9 +55,8 @@ controls:
     status: "satisfied"
     evidence: ["CONSTITUTION.md#8-portability-is-architectural", "SPEC.md#413-portability"]
   packaging_and_synchronization:
-    status: "partial"
-    evidence: ["moda.yaml", "docs/synchronization.md"]
-    gaps: ["Skill, templates, validator, and example packages are declared but not present in the audited commit."]
+    status: "satisfied"
+    evidence: ["moda.yaml", "docs/synchronization.md", "skill/manifest.yaml", "templates/", "examples/", "scripts/validate_moda.py"]
   evolution:
     status: "satisfied"
     evidence: ["CHANGELOG.md", "UPGRADE.md", "MIGRATIONS.md", "SPEC.md#9-semantic-versioning"]

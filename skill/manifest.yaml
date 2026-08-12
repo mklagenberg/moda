@@ -11,10 +11,11 @@ framework:
   name: "moda"
   compatibility: "^1.0.0"
   verified_against: "1.0.0"
+  verified_commit: "fd56189ecd995736de14aa7f1340130a989b792a"
 
 knowledge:
   repository: "https://github.com/mklagenberg/moda"
-  snapshot: "ff3966ec7b2bc2f8b77abba00562ab53e5036782"
+  snapshot: "fd56189ecd995736de14aa7f1340130a989b792a"
   entrypoints:
     - "SPEC.md"
     - "docs/taxonomy.md"
@@ -25,8 +26,8 @@ knowledge:
     - "docs/evaluation-and-safety.md"
 
 synchronization:
-  state: "review-required"
-  reason: "The initial package is being assembled before the v1.0.0 release gate."
+  state: "current"
+  reason: "Skill 1.0.0 was validated with the MODA 1.0.0 release-candidate contract and pinned knowledge snapshot."
   audit_triggers:
     - "framework-version-change"
     - "normative-specification-change"
