@@ -2,7 +2,7 @@ framework:
   id: "moda"
   required_version: "^1.0.0"
   verified_against: "1.0.0"
-  verified_commit: "fd56189ecd995736de14aa7f1340130a989b792a"
+  verified_commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
 
 subject:
   id: "moda"
@@ -11,8 +11,8 @@ subject:
   adoption_mode: "native"
 
 assessment:
-  claim_stage: "verified"
-  result: "conformant"
+  claim_stage: "mapped"
+  result: "partial"
 
 controls:
   problem_and_purpose:
@@ -55,13 +55,15 @@ controls:
     status: "satisfied"
     evidence: ["CONSTITUTION.md#8-portability-is-architectural", "SPEC.md#413-portability"]
   packaging_and_synchronization:
-    status: "satisfied"
-    evidence: ["moda.yaml", "docs/synchronization.md", "skill/manifest.yaml", "templates/", "examples/", "scripts/validate_moda.py"]
+    status: "partial"
+    evidence: ["moda.yaml", "docs/synchronization.md", "docs/composition-scaffolding-and-distribution.md", "skill/manifest.yaml", "templates/", "ROADMAP.md"]
+    gaps: ["Host-specific ChatGPT, Claude, and other distribution packages and their end-to-end installation/update fixtures are roadmap work."]
   evolution:
     status: "satisfied"
-    evidence: ["CHANGELOG.md", "UPGRADE.md", "MIGRATIONS.md", "SPEC.md#9-semantic-versioning"]
+    evidence: ["CHANGELOG.md", "ROADMAP.md", "decisions/", "UPGRADE.md", "MIGRATIONS.md", "SPEC.md#9-semantic-versioning"]
   repository_contract:
-    status: "satisfied"
-    evidence: ["README.md", "AGENTS.md", "moda.yaml", "docs/repository-contract.md"]
+    status: "partial"
+    evidence: ["README.md", "AGENTS.md", "moda.yaml", "CHANGELOG.md", "ROADMAP.md", "decisions/", "docs/repository-contract.md"]
+    gaps: ["The expanded repository contract and its negative fixtures await the next immutable release audit."]
 
 exceptions: []

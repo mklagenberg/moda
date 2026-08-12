@@ -11,11 +11,11 @@ framework:
   name: "moda"
   compatibility: "^1.0.0"
   verified_against: "1.0.0"
-  verified_commit: "fd56189ecd995736de14aa7f1340130a989b792a"
+  verified_commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
 
 knowledge:
   repository: "https://github.com/mklagenberg/moda"
-  snapshot: "fd56189ecd995736de14aa7f1340130a989b792a"
+  snapshot: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
   entrypoints:
     - "SPEC.md"
     - "docs/taxonomy.md"
@@ -23,11 +23,12 @@ knowledge:
     - "docs/repository-contract.md"
     - "docs/conformance-and-audit.md"
     - "docs/synchronization.md"
+    - "docs/composition-scaffolding-and-distribution.md"
     - "docs/evaluation-and-safety.md"
 
 synchronization:
-  state: "current"
-  reason: "Skill 1.0.0 was validated with the MODA 1.0.0 release-candidate contract and pinned knowledge snapshot."
+  state: "review-required"
+  reason: "The contract now covers composition, scaffolding, distribution, and update awareness; the skill remains pinned to the last audited snapshot until the next release review."
   audit_triggers:
     - "framework-version-change"
     - "normative-specification-change"
@@ -40,3 +41,12 @@ installation:
   scope: "per-person-per-environment"
   lockfile: "skill.lock.yaml"
   automatic_migration: false
+
+updates:
+  check_on_first_activation: true
+  normal_ttl: "P7D"
+  security_ttl: "P1D"
+  canonical_manifest: "https://github.com/mklagenberg/moda/releases"
+  security_advisories: "https://github.com/mklagenberg/moda/security/advisories"
+  unavailable_state: "unknown"
+  automatic_self_update: false

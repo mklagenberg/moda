@@ -3,7 +3,7 @@ moda:
   repository: "https://github.com/mklagenberg/moda"
   compatibility: "^1.0.0"
   verified_against: "1.0.0"
-  verified_commit: "0000000000000000000000000000000000000000"
+  verified_commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
 
 artifact:
   id: "example-methodology"
@@ -12,7 +12,7 @@ artifact:
   version: "0.1.0"
   status: "development"
   language: "en"
-  repository: "https://example.invalid/example-methodology"
+  repository: "https://github.com/mklagenberg/moda/tree/909c83cd5b82d5840b40eb87f6b2ed4885a71c94/examples/minimal-methodology"
   license: "Apache-2.0"
 
 adoption:
@@ -27,16 +27,21 @@ documentation:
   specification: "SPEC.md"
   getting_started: "README.md"
   invariants: "SPEC.md#contracts-and-evidence"
-  changelog: "README.md"
+  changelog: "CHANGELOG.md"
+  roadmap: "ROADMAP.md"
   upgrade: "README.md"
   migrations: "README.md"
-  decisions: "README.md"
+  decisions: "decisions/"
 
 components: []
 packages:
   specification:
+    role: "normative-specification"
     version: "0.1.0"
     source: "SPEC.md"
+    source_kind: "local"
+
+installations: []
 
 conformance:
   profile: "conformance/moda.yaml"
@@ -46,4 +51,4 @@ conformance:
 synchronization:
   policy: "README.md"
   state: "unknown"
-  reason: "Example placeholders have not been verified."
+  reason: "The fixture is structurally valid but makes no conformance claim."

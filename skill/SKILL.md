@@ -9,11 +9,14 @@ Use MODA to make agentic methodologies explicit, traceable, portable, auditable,
 
 ## Establish authority and version
 
-1. Read the target repository's `AGENTS.md` before operating on it.
-2. Read the target `moda.yaml` when present.
-3. Compare the target compatibility, this skill's `manifest.yaml`, and the canonical MODA repository.
-4. Load only the relevant normative sections and supporting references.
-5. Report missing provenance, incompatible versions, or unresolved sources before claiming conformance.
+1. On first activation in the current session or execution context, compare this skill's version and compatibility with the canonical MODA update source, or reuse an assessment whose normal and security TTLs remain valid.
+2. Report `unknown` or `offline` when freshness cannot be checked; never claim that the installation is current without evidence.
+3. Restrict only affected capabilities for a known high-impact advisory and retain safe update-help behavior. Never silently self-update.
+4. Read the target repository's `AGENTS.md` before operating on it.
+5. Read the target `moda.yaml` when present.
+6. Compare the target compatibility, this skill's `manifest.yaml`, and the canonical MODA repository.
+7. Load only the relevant normative sections and supporting references.
+8. Report missing provenance, incompatible versions, or unresolved sources before claiming conformance.
 
 The canonical knowledge source is `https://github.com/mklagenberg/moda`. The skill is procedural guidance; the repository specification is authoritative.
 
@@ -23,6 +26,7 @@ The canonical knowledge source is `https://github.com/mklagenberg/moda`. The ski
 - Classify or decompose an existing artifact → use the taxonomy in `SPEC.md`, section 3.
 - Audit or map conformance → read `references/audit-workflow.md`.
 - Add repository entry points, manifest, disclosures, or packaging → read `references/repository-workflow.md`.
+- Design or audit scaffolds, portable skills, host adapters, distribution packages, installation, or update checks → read `references/distribution-workflow.md`.
 - Resolve version or knowledge drift → retrieve canonical `docs/synchronization.md` at the knowledge snapshot declared in `manifest.yaml`.
 - Prepare an upgrade or release → read canonical `UPGRADE.md`, `MIGRATIONS.md`, and `CHANGELOG.md`.
 

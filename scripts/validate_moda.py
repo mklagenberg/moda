@@ -15,8 +15,13 @@ from urllib.parse import urlparse
 import yaml
 
 
-SEMVER = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+$")
+SEMVER = re.compile(
+    r"^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)"
+    r"(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?"
+    r"(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$"
+)
 COMMIT = re.compile(r"^[0-9a-f]{40}$")
+ZERO_COMMIT = "0" * 40
 OFFICIAL_REPOSITORY = "https://github.com/mklagenberg/moda"
 DISCLOSURE_START = "<!-- moda:disclosure:start -->"
 DISCLOSURE_END = "<!-- moda:disclosure:end -->"
@@ -48,6 +53,27 @@ def load_yaml(path: Path, findings: list[Finding]) -> dict[str, Any]:
 
 def local_target(value: str) -> str:
     return value.split("#", 1)[0].rstrip("/")
+
+
+def markdown_anchor(value: str) -> str:
+    value = value.strip().lower()
+    value = re.sub(r"[^\w\- ]", "", value, flags=re.UNICODE)
+    return re.sub(r" +", "-", value)
+
+
+def validate_local_reference(root: Path, value: str, path: str, findings: list[Finding]) -> None:
+    target, _, fragment = value.partition("#")
+    resolved = root / target.rstrip("/") if target else root / path
+    if target and not resolved.exists():
+        findings.append(Finding("error", "broken-evidence-path", f"Evidence target '{value}' does not exist.", path))
+        return
+    if fragment and resolved.is_file() and resolved.suffix.lower() == ".md":
+        headings = {
+            markdown_anchor(match.group(1))
+            for match in re.finditer(r"^#{1,6}\s+(.+?)\s*$", resolved.read_text(encoding="utf-8"), re.MULTILINE)
+        }
+        if fragment.lower() not in headings:
+            findings.append(Finding("error", "broken-evidence-anchor", f"Evidence anchor '{value}' does not exist.", path))
 
 
 def require_mapping(parent: dict[str, Any], key: str, path: str, findings: list[Finding]) -> dict[str, Any]:
@@ -136,6 +162,7 @@ def validate_schema_value(value: Any, schema: dict[str, Any], location: str, fin
 def validate_disclosure(
     root: Path,
     relative: str,
+    conformance_profile: str,
     artifact: dict[str, Any],
     moda: dict[str, Any],
     agent_entrypoint: bool,
@@ -152,7 +179,7 @@ def validate_disclosure(
         findings.append(Finding("error", "missing-official-link", "MODA official repository link is missing.", relative))
     if "moda.yaml" not in text:
         findings.append(Finding("error", "missing-manifest-link", "MODA manifest is not referenced.", relative))
-    if "conformance/moda.yaml" not in text:
+    if conformance_profile not in text:
         findings.append(Finding("error", "missing-conformance-link", "MODA conformance profile is not referenced.", relative))
     if not agent_entrypoint:
         kind = artifact.get("kind")
@@ -172,7 +199,7 @@ def validate_repository(root: Path, schema_path: Path | None = None) -> list[Fin
 
     require_keys(
         manifest,
-        ["moda", "artifact", "adoption", "documentation", "components", "packages", "conformance", "synchronization"],
+        ["moda", "artifact", "adoption", "documentation", "components", "packages", "installations", "conformance", "synchronization"],
         "moda.yaml",
         findings,
     )
@@ -184,11 +211,12 @@ def validate_repository(root: Path, schema_path: Path | None = None) -> list[Fin
     packages = require_mapping(manifest, "packages", "moda.yaml", findings)
     conformance = require_mapping(manifest, "conformance", "moda.yaml", findings)
     synchronization = require_mapping(manifest, "synchronization", "moda.yaml", findings)
+    installations = manifest.get("installations")
 
     require_keys(moda, ["manifest_version", "repository", "compatibility", "verified_against", "verified_commit"], "moda.yaml:moda", findings)
     require_keys(artifact, ["id", "name", "kind", "version", "status", "language", "repository", "license"], "moda.yaml:artifact", findings)
     require_keys(adoption, ["relationship", "mode", "claim_stage", "conformance_result"], "moda.yaml:adoption", findings)
-    require_keys(documentation, ["human_entrypoint", "agent_entrypoint", "specification", "getting_started", "invariants", "changelog", "upgrade", "migrations", "decisions"], "moda.yaml:documentation", findings)
+    require_keys(documentation, ["human_entrypoint", "agent_entrypoint", "specification", "getting_started", "invariants", "changelog", "roadmap", "upgrade", "migrations", "decisions"], "moda.yaml:documentation", findings)
     require_keys(conformance, ["profile", "latest_audit", "audit_mode"], "moda.yaml:conformance", findings)
     require_keys(synchronization, ["policy", "state", "reason"], "moda.yaml:synchronization", findings)
 
@@ -196,10 +224,24 @@ def validate_repository(root: Path, schema_path: Path | None = None) -> list[Fin
         findings.append(Finding("error", "invalid-kind", "Artifact kind must be 'methodology' or 'framework'.", "moda.yaml"))
     for label, value in (("artifact.version", artifact.get("version")), ("moda.verified_against", moda.get("verified_against"))):
         if not isinstance(value, str) or not SEMVER.fullmatch(value):
-            findings.append(Finding("error", "invalid-semver", f"{label} must be a three-part semantic version.", "moda.yaml"))
+            findings.append(Finding("error", "invalid-semver", f"{label} must be a valid semantic version.", "moda.yaml"))
     commit = moda.get("verified_commit")
-    if not isinstance(commit, str) or not COMMIT.fullmatch(commit):
-        findings.append(Finding("error", "invalid-commit", "verified_commit must be a full lowercase Git commit SHA.", "moda.yaml"))
+    if not isinstance(commit, str) or not COMMIT.fullmatch(commit) or commit == ZERO_COMMIT:
+        findings.append(Finding("error", "invalid-commit", "verified_commit must be a non-placeholder full lowercase Git commit SHA.", "moda.yaml"))
+
+    literal_files = ["README.md", "AGENTS.md", "CHANGELOG.md"]
+    if artifact.get("status") in {"development", "active"}:
+        literal_files.append("ROADMAP.md")
+    for relative in literal_files:
+        if not (root / relative).is_file():
+            findings.append(Finding("error", "missing-literal-artifact", f"Required literal repository artifact '{relative}' is missing.", relative))
+
+    decisions_path = documentation.get("decisions")
+    if not isinstance(decisions_path, str) or not (root / local_target(decisions_path)).is_dir():
+        findings.append(Finding("error", "invalid-decisions-path", "Decision Records must map to a dedicated directory.", "moda.yaml"))
+
+    if not isinstance(installations, list):
+        findings.append(Finding("error", "invalid-installations", "installations must be an array.", "moda.yaml"))
 
     for label, relative in documentation.items():
         if not isinstance(relative, str):
@@ -208,18 +250,32 @@ def validate_repository(root: Path, schema_path: Path | None = None) -> list[Fin
         target = local_target(relative)
         if target and not (root / target).exists():
             findings.append(Finding("error", "broken-documentation-path", f"Documentation target '{relative}' does not exist.", "moda.yaml"))
+        elif "#" in relative:
+            validate_local_reference(root, relative, "moda.yaml", findings)
 
     for label, package in packages.items():
         if not isinstance(package, dict):
             findings.append(Finding("error", "invalid-package", f"Package '{label}' must be a mapping.", "moda.yaml"))
             continue
-        require_keys(package, ["version", "source"], f"moda.yaml:packages.{label}", findings)
+        require_keys(package, ["role", "version", "source", "source_kind"], f"moda.yaml:packages.{label}", findings)
         version = package.get("version")
         if isinstance(version, str) and not SEMVER.fullmatch(version):
             findings.append(Finding("error", "invalid-package-version", f"Package '{label}' has an invalid version.", "moda.yaml"))
         source = package.get("source")
-        if isinstance(source, str) and not (root / local_target(source)).exists():
-            findings.append(Finding("error", "broken-package-source", f"Package source '{source}' does not exist.", "moda.yaml"))
+        source_kind = package.get("source_kind")
+        if source_kind == "local":
+            if not isinstance(source, str) or not (root / local_target(source)).exists():
+                findings.append(Finding("error", "broken-package-source", f"Local package source '{source}' does not exist.", "moda.yaml"))
+        elif source_kind == "git":
+            if not isinstance(source, dict):
+                findings.append(Finding("error", "invalid-remote-source", f"Git package '{label}' source must be a mapping.", "moda.yaml"))
+            else:
+                require_keys(source, ["repository", "ref", "commit"], f"moda.yaml:packages.{label}.source", findings)
+                source_commit = source.get("commit")
+                if not isinstance(source_commit, str) or not COMMIT.fullmatch(source_commit) or source_commit == ZERO_COMMIT:
+                    findings.append(Finding("error", "invalid-remote-commit", f"Git package '{label}' must pin a non-placeholder commit.", "moda.yaml"))
+        else:
+            findings.append(Finding("error", "invalid-source-kind", f"Package '{label}' source_kind must be 'local' or 'git'.", "moda.yaml"))
 
     profile = conformance.get("profile")
     audit = conformance.get("latest_audit")
@@ -255,14 +311,24 @@ def validate_repository(root: Path, schema_path: Path | None = None) -> list[Fin
                 findings.append(Finding("error", "conformance-mismatch", f"{label} is {actual!r}; expected {wanted!r} from moda.yaml.", str(profile)))
         if assessment.get("claim_stage") in {"mapped", "verified", "certified"} and not controls:
             findings.append(Finding("error", "empty-controls", "Conformance profile must map at least one control.", str(profile)))
+        allowed_control_states = {"satisfied", "partial", "missing", "not-applicable"}
+        for control, mapping in controls.items():
+            if not isinstance(mapping, dict) or mapping.get("status") not in allowed_control_states:
+                findings.append(Finding("error", "invalid-control-status", f"Control '{control}' has an invalid status.", str(profile)))
+                continue
+            evidence = mapping.get("evidence", [])
+            if isinstance(evidence, list):
+                for reference in evidence:
+                    if isinstance(reference, str) and not reference.startswith(("http://", "https://")):
+                        validate_local_reference(root, reference, str(profile), findings)
 
     if audit_data:
         audit_subject = require_mapping(audit_data, "subject", str(audit), findings)
         audit_framework = require_mapping(audit_data, "framework", str(audit), findings)
         audit_result = require_mapping(audit_data, "result", str(audit), findings)
         for label, value in (("subject.commit", audit_subject.get("commit")), ("framework.commit", audit_framework.get("commit"))):
-            if not isinstance(value, str) or not COMMIT.fullmatch(value):
-                findings.append(Finding("error", "invalid-audit-commit", f"Audit {label} must be a full lowercase Git commit SHA.", str(audit)))
+            if not isinstance(value, str) or not COMMIT.fullmatch(value) or value == ZERO_COMMIT:
+                findings.append(Finding("error", "invalid-audit-commit", f"Audit {label} must be a non-placeholder full lowercase Git commit SHA.", str(audit)))
         expected = {
             "subject.id": (audit_subject.get("id"), artifact.get("id")),
             "subject.kind": (audit_subject.get("kind"), artifact.get("kind")),
@@ -274,10 +340,23 @@ def validate_repository(root: Path, schema_path: Path | None = None) -> list[Fin
         for label, (actual, wanted) in expected.items():
             if actual != wanted:
                 findings.append(Finding("error", "audit-mismatch", f"{label} is {actual!r}; expected {wanted!r} from moda.yaml.", str(audit)))
+        severity_keys = {
+            "critical": "critical_findings",
+            "major": "major_findings",
+            "minor": "minor_findings",
+            "observation": "observations",
+        }
+        audit_findings = audit_data.get("findings", [])
+        audit_findings = audit_findings if isinstance(audit_findings, list) else []
+        for severity, count_key in severity_keys.items():
+            actual_count = sum(1 for item in audit_findings if isinstance(item, dict) and item.get("severity") == severity)
+            if audit_result.get(count_key) != actual_count:
+                findings.append(Finding("error", "audit-count-mismatch", f"{count_key} is {audit_result.get(count_key)!r}; counted {actual_count}.", str(audit)))
 
     validate_disclosure(
         root,
         str(documentation.get("human_entrypoint", "README.md")),
+        str(conformance.get("profile", "conformance/moda.yaml")),
         artifact,
         moda,
         False,
@@ -286,6 +365,7 @@ def validate_repository(root: Path, schema_path: Path | None = None) -> list[Fin
     validate_disclosure(
         root,
         str(documentation.get("agent_entrypoint", "AGENTS.md")),
+        str(conformance.get("profile", "conformance/moda.yaml")),
         artifact,
         moda,
         True,

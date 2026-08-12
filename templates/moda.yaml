@@ -31,6 +31,7 @@ documentation:
   best_practices: "BEST-PRACTICES.md"
   limitations: "DISCLAIMER.md"
   changelog: "CHANGELOG.md"
+  roadmap: "ROADMAP.md"
   upgrade: "UPGRADE.md"
   migrations: "MIGRATIONS.md"
   decisions: "decisions/"
@@ -38,8 +39,12 @@ documentation:
 components: []
 packages:
   specification:
+    role: "normative-specification"
     version: "1.0.0"
     source: "SPEC.md"
+    source_kind: "local"
+
+installations: []
 
 conformance:
   profile: "conformance/moda.yaml"

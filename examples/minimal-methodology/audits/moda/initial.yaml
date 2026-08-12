@@ -13,14 +13,14 @@ subject:
   id: "example-methodology"
   kind: "methodology"
   version: "0.1.0"
-  repository: "https://example.invalid/example-methodology"
-  commit: "0000000000000000000000000000000000000000"
+  repository: "https://github.com/mklagenberg/moda/tree/909c83cd5b82d5840b40eb87f6b2ed4885a71c94/examples/minimal-methodology"
+  commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
 
 framework:
   id: "moda"
   version: "1.0.0"
   repository: "https://github.com/mklagenberg/moda"
-  commit: "0000000000000000000000000000000000000000"
+  commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
 
 result:
   profile: "methodology"
@@ -35,7 +35,7 @@ findings:
   - id: "EXAMPLE-ONLY"
     severity: "observation"
     control: "provenance"
-    description: "Placeholder commits are intentionally unresolved."
-    recommendation: "Replace every placeholder with immutable evidence before making a conformance claim."
+    description: "The fixture demonstrates structure only and intentionally makes no conformance claim."
+    recommendation: "Run a complete audit before raising the claim stage beyond declared."
 
 exceptions: []

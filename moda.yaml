@@ -3,7 +3,7 @@ moda:
   repository: "https://github.com/mklagenberg/moda"
   compatibility: "^1.0.0"
   verified_against: "1.0.0"
-  verified_commit: "fd56189ecd995736de14aa7f1340130a989b792a"
+  verified_commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
 
 artifact:
   id: "moda"
@@ -20,8 +20,8 @@ artifact:
 adoption:
   relationship: "designed_with"
   mode: "native"
-  claim_stage: "verified"
-  conformance_result: "conformant"
+  claim_stage: "mapped"
+  conformance_result: "partial"
 
 documentation:
   human_entrypoint: "README.md"
@@ -32,9 +32,11 @@ documentation:
   best_practices: "BEST-PRACTICES.md"
   limitations: "DISCLAIMER.md"
   changelog: "CHANGELOG.md"
+  roadmap: "ROADMAP.md"
   upgrade: "UPGRADE.md"
   migrations: "MIGRATIONS.md"
   decisions: "decisions/"
+  composition: "docs/composition-scaffolding-and-distribution.md"
 
 components:
   - id: "artifact-taxonomy"
@@ -53,33 +55,51 @@ components:
     kind: "method"
     source: "SPEC.md#7-conformance-claims"
     lifecycle: "embedded"
+  - id: "composition-scaffolding-distribution"
+    kind: "framework"
+    source: "docs/composition-scaffolding-and-distribution.md"
+    lifecycle: "embedded"
 
 packages:
   specification:
+    role: "normative-specification"
     version: "1.0.0"
     source: "SPEC.md"
+    source_kind: "local"
   schema:
+    role: "machine-contract"
     version: "1.0.0"
     source: "schemas/moda.schema.json"
+    source_kind: "local"
   validator:
+    role: "deterministic-validator"
     version: "1.0.0"
     source: "scripts/validate_moda.py"
+    source_kind: "local"
   skill:
+    role: "portable-agent-skill-core"
     version: "1.0.0"
     source: "skill/manifest.yaml"
+    source_kind: "local"
   templates:
+    role: "adoption-and-scaffold-templates"
     version: "1.0.0"
     source: "templates/"
+    source_kind: "local"
   examples:
+    role: "evaluation-fixtures"
     version: "1.0.0"
     source: "examples/"
+    source_kind: "local"
+
+installations: []
 
 conformance:
   profile: "conformance/moda.yaml"
-  latest_audit: "audits/moda/2026-08-12-v1.0.0-rc1.yaml"
+  latest_audit: "audits/moda/2026-08-12-pre-tag-architecture-review.yaml"
   audit_mode: "self-audit"
 
 synchronization:
   policy: "docs/synchronization.md"
-  state: "current"
-  reason: "The specification, schema, validator, templates, examples, skill, and conformance evidence were verified together for the v1.0.0 release candidate."
+  state: "review-required"
+  reason: "The pre-tag review expanded the contract and identified validation and distribution work that must pass before a conformant release claim."

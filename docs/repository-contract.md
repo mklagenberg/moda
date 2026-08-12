@@ -16,6 +16,12 @@ The repository contract exposes one system through three interfaces.
 
 ## Evolution interface
 
-The changelog records what changed. Upgrade guidance records adopter actions for compatible releases. Migrations handle incompatible releases. Decision Records preserve why durable structural choices were made.
+The roadmap communicates direction. Issues or proposals track executable work. The changelog records what changed. Upgrade guidance records adopter actions for compatible releases. Migrations handle incompatible releases. Decision Records preserve why durable structural choices were made.
+
+Actively developed standalone artifacts keep `ROADMAP.md` at the root. It uses outcome-oriented horizons and does not create a delivery commitment unless a release plan or milestone explicitly says so.
+
+## Composition interface
+
+The manifest identifies canonical source, scaffold profiles, skills, adapters, distribution packages, and installations without treating them as the same lifecycle. See [Composition, Scaffolding, and Distribution](composition-scaffolding-and-distribution.md).
 
 The same fact should have one authoritative source. Other interfaces link to it.

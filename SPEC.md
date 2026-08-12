@@ -118,11 +118,19 @@ Keep core contracts independent of a model or vendor. Isolate product-specific b
 
 ### 4.14 Packaging and synchronization
 
-Identify specifications, prompts, skills, knowledge sources, schemas, templates, scripts, examples, tests, and adapters. Declare versions and provenance. Define how drift is detected and resolved.
+Identify specifications, prompts, skills, knowledge sources, schemas, scaffold engines and profiles, templates, scripts, examples, tests, adapters, distribution packages, and installations. Declare roles, versions, compatibility, source topology, and provenance. Define how drift is detected and resolved.
+
+Repository boundaries MUST follow material differences in access, ownership, release cadence, technology, reuse, or independent consumption. Artifact kind alone is not sufficient reason for a separate repository.
+
+When a methodology produces instances, it MUST define a scaffolding contract. Every scaffold profile MUST declare its intended instance type, inputs, outputs, conflicts, postconditions, and ownership class for generated files. Systematic post-instantiation deletion of inherited files is evidence that the profile is over-broad and SHOULD be redesigned.
+
+When a methodology provides an agent skill, it MUST separate portable methodology semantics from host-specific adapters. It MUST declare installation paths, compatibility, update discovery, security advisory behavior, and distribution evidence for every supported host. The skill MUST participate in update detection on first activation per session or execution context, but MUST NOT be the only update channel or silently replace itself.
 
 ### 4.15 Evolution
 
-Define versioning, changelog policy, decision records, upgrade guidance, migrations, audit cadence, learning from execution, and criteria for adding or removing components.
+Define versioning, changelog policy, roadmap governance, decision records, upgrade guidance, migrations, audit cadence, learning from execution, and criteria for adding or removing components.
+
+An actively developed standalone methodology or framework MUST maintain a root `ROADMAP.md`. It MUST distinguish direction from delivery commitments and MUST NOT duplicate the detailed backlog or delivered changelog.
 
 ## 5. Repository contract
 
@@ -132,6 +140,7 @@ Every standalone conforming repository MUST provide:
 - `AGENTS.md` as the canonical agent entry point;
 - `moda.yaml` as the machine-readable identity and conformance declaration;
 - `CHANGELOG.md` as the evolution record;
+- `ROADMAP.md` as the direction record while the artifact is under active development;
 - a normative specification, defaulting to `SPEC.md`;
 - an onboarding path, defaulting to `GETTING-STARTED.md`;
 - explicit invariants, either in `CONSTITUTION.md` or a mapped normative section;
@@ -141,6 +150,8 @@ Every standalone conforming repository MUST provide:
 - a conformance mapping and latest audit reference.
 
 Supporting capabilities MAY share a file when the repository is small, but `moda.yaml` MUST point to their authoritative location.
+
+The literal `README.md`, `AGENTS.md`, `moda.yaml`, and `CHANGELOG.md` files are not replaceable by mappings to unrelated files. `ROADMAP.md` is literal for artifacts in `development` or `active` status. Decision Records MUST be stored in a dedicated mapped path and contain durable choices, not merely point to a generic narrative file.
 
 ### 5.1 Human disclosure
 
@@ -193,15 +204,19 @@ An audit MUST identify subject version and commit, MODA version and commit or ta
 
 ## 8. Versions and provenance
 
-Compatibility ranges express accepted MODA versions. Verification MUST pin an exact released version and immutable source reference.
+Compatibility ranges express accepted MODA versions. Verification of a release MUST pin an exact released version and immutable source reference. A bootstrap or release-candidate assessment MAY pin an unreleased commit only when it is labeled as a candidate assessment and cannot yield a released or certified claim.
 
-The methodology, skill, knowledge snapshot, scaffold, toolkit, adapter, and installed copy MAY evolve independently. Each independently evolving package MUST declare its own version and source provenance.
+The methodology, skill core, knowledge snapshot, scaffold engine, scaffold profile, toolkit, adapter, distribution package, and installed copy MAY evolve independently. Each independently evolving package MUST declare its own version and source provenance. MODA recommends a shared release train until independent ownership or cadence is demonstrated.
+
+For every package, source and installation are separate dimensions. A package source is local to the methodology repository or remote with repository, ref, and immutable commit. An installation records the package actually available in an execution environment. Historical generator provenance MUST NOT be used as a substitute for current installation state.
+
+A distributed skill MUST declare its own version, methodology compatibility range, adapter target, canonical update manifest, security advisory channel, and first-activation check policy. When update status cannot be checked, the skill MUST report `unknown` or `offline`, never `current`.
 
 Missing provenance produces `unknown` synchronization state. A tool MUST NOT silently assume that equal version strings imply equal content.
 
 ## 9. Semantic Versioning
 
-MODA and MODA-conforming versioned artifacts SHOULD use Semantic Versioning:
+MODA and MODA-conforming versioned artifacts SHOULD use full Semantic Versioning, including prerelease and build metadata when applicable:
 
 - MAJOR when an existing conforming adopter requires migration;
 - MINOR when a backward-compatible capability is added;

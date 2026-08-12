@@ -1,0 +1,23 @@
+product: "<methodology-id>"
+channel: "stable"
+latest_version: "1.0.0"
+minimum_secure_version: "1.0.0"
+methodology_compatibility: ">=1.0.0 <2.0.0"
+release_notes: "<url>"
+security_advisories: "<url>"
+
+packages:
+  - name: "<package-id>"
+    channel: "stable"
+    target: "chatgpt"
+    package_version: "1.0.0"
+    adapter_version: "1.0.0"
+    methodology_compatibility: ">=1.0.0 <2.0.0"
+    source_repository: "<canonical-repository-url>"
+    source_path: "<path>"
+    source_commit: "<immutable-commit>"
+    checksum: "<algorithm:digest-or-platform-identity>"
+    install_instructions: "<url>"
+    update_instructions: "<url>"
+
+advisories: []

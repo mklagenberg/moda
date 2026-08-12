@@ -11,6 +11,7 @@ MODA is an open framework for designing, auditing, packaging, and evolving agent
 - a repository contract with separate entry points for humans, agents, and machines;
 - conformance profiles and evidence-based audits for existing or new methodologies;
 - versioning, provenance, synchronization, upgrade, and recovery requirements;
+- source topology, scaffold profiles, portable skills, host adapters, distribution, and runtime update-awareness requirements;
 - model- and vendor-independent packaging guidance.
 
 ## What MODA is not
@@ -40,6 +41,7 @@ MODA is its own first conforming artifact. Its repository structure, specificati
 3. Read the [Specification](SPEC.md) for the normative framework contract.
 4. Read [Best Practices](BEST-PRACTICES.md) for application guidance.
 5. Read the [Disclaimer](DISCLAIMER.md) before using MODA in high-impact contexts.
+6. Read the [Roadmap](ROADMAP.md) for current direction without treating it as a release commitment.
 
 Agents must start with [AGENTS.md](AGENTS.md).
 
@@ -48,6 +50,7 @@ Agents must start with [AGENTS.md](AGENTS.md).
 - `SPEC.md` — normative MODA contract.
 - `moda.yaml` — machine-readable identity and self-conformance declaration.
 - `docs/` — explanatory models, taxonomy, lifecycle, governance, and synchronization.
+- `ROADMAP.md` — outcome-oriented direction for MODA itself.
 - `conformance/` — current conformance mapping.
 - `audits/` — immutable audit evidence.
 - `schemas/` — machine-readable schemas.

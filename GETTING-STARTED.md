@@ -28,6 +28,7 @@ Create the human, agent, and machine entry points:
 - `AGENTS.md`;
 - `moda.yaml`;
 - `CHANGELOG.md`.
+- `ROADMAP.md` while the artifact is actively developed.
 
 Map the normative specification, onboarding, invariants, upgrade path, migrations, decisions, conformance profile, and audit history in `moda.yaml`.
 
@@ -45,7 +46,9 @@ Resolve findings through small, reviewed changes. Do not rename or split every a
 
 ## 8. Package operational guidance
 
-If the methodology has a skill, toolkit, templates, adapters, or knowledge base, version each independently and declare synchronization rules.
+If the methodology produces instances, define one scaffold engine with explicit profiles, generated-file ownership, conflict behavior, and postconditions. Do not use an over-broad template that requires routine cleanup after creation.
+
+If the methodology has a skill, toolkit, templates, adapters, distribution packages, or knowledge base, declare their roles, source topology, compatibility, provenance, and synchronization rules. Keep portable skill semantics separate from host adapters, and define first-activation update and security checks without allowing silent self-update.
 
 ## 9. Verify before release
 

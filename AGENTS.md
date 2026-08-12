@@ -13,6 +13,7 @@ Load only the context required for the current task:
 5. Read the relevant document under `docs/`.
 6. Read the current conformance profile and latest audit when changing MODA structure.
 7. Read the current changelog and upgrade guidance when changing released behavior.
+8. Read `ROADMAP.md` when changing product direction or introducing a new distribution capability.
 
 Do not turn this file into an encyclopedia. Detailed knowledge belongs in linked documentation.
 
@@ -50,6 +51,7 @@ Do not introduce a requirement that this repository silently violates.
 - Keep commits small, coherent, and reviewable.
 - Update `CHANGELOG.md` for notable behavior or contract changes.
 - Record durable structural choices under `decisions/`.
+- Update `ROADMAP.md` when direction changes; do not use it as a task backlog or changelog.
 - Update `UPGRADE.md` for adopter action required by a backward-compatible release.
 - Update `MIGRATIONS.md` for incompatible changes.
 - Assess effects on schemas, templates, examples, validators, skill guidance, and conformance fixtures.

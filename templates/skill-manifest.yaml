@@ -1,0 +1,27 @@
+manifest_version: "1.0"
+
+skill:
+  name: "<skill-name>"
+  version: "1.0.0"
+  core_path: "skill/"
+  source_repository: "<canonical-repository-url>"
+  source_commit: "<immutable-commit>"
+
+methodology:
+  compatibility: ">=1.0.0 <2.0.0"
+
+adapters:
+  - target: "chatgpt"
+    version: "1.0.0"
+    package: "<package-id>"
+  - target: "claude"
+    version: "1.0.0"
+    package: "<package-id>"
+
+updates:
+  manifest: "<canonical-update-manifest-url>"
+  advisories: "<canonical-security-advisory-url>"
+  check_on_first_activation: true
+  normal_ttl: "P7D"
+  security_ttl: "P1D"
+  self_modify: false
