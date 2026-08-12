@@ -1,0 +1,82 @@
+moda:
+  manifest_version: "1.0"
+  repository: "https://github.com/mklagenberg/moda"
+  compatibility: "^1.0.0"
+  verified_against: "1.0.0"
+  verified_commit: "987a8def70925b69983af4417518275f8fefd375"
+
+artifact:
+  id: "moda"
+  name: "MODA"
+  full_name: "Methodology Organization, Design & Audit"
+  kind: "framework"
+  domain: "agentic-methodology-engineering"
+  version: "1.0.0"
+  status: "development"
+  language: "en"
+  repository: "https://github.com/mklagenberg/moda"
+  license: "Apache-2.0"
+
+adoption:
+  relationship: "designed_with"
+  mode: "native"
+  claim_stage: "mapped"
+  conformance_result: "partial"
+
+documentation:
+  human_entrypoint: "README.md"
+  agent_entrypoint: "AGENTS.md"
+  specification: "SPEC.md"
+  getting_started: "GETTING-STARTED.md"
+  invariants: "CONSTITUTION.md"
+  best_practices: "BEST-PRACTICES.md"
+  limitations: "DISCLAIMER.md"
+  changelog: "CHANGELOG.md"
+  upgrade: "UPGRADE.md"
+  migrations: "MIGRATIONS.md"
+  decisions: "decisions/"
+
+components:
+  - id: "artifact-taxonomy"
+    kind: "model"
+    source: "SPEC.md#3-taxonomy"
+    lifecycle: "embedded"
+  - id: "design-requirements"
+    kind: "framework"
+    source: "SPEC.md#4-design-requirements"
+    lifecycle: "embedded"
+  - id: "repository-contract"
+    kind: "framework"
+    source: "SPEC.md#5-repository-contract"
+    lifecycle: "embedded"
+  - id: "conformance-audit"
+    kind: "method"
+    source: "SPEC.md#7-conformance-claims"
+    lifecycle: "embedded"
+
+packages:
+  specification:
+    version: "1.0.0"
+    source: "SPEC.md"
+  schema:
+    version: "1.0.0"
+    source: "schemas/moda.schema.json"
+  validator:
+    version: "1.0.0"
+    source: "scripts/validate_moda.py"
+  skill:
+    version: "1.0.0"
+    source: "skill/manifest.yaml"
+  templates:
+    version: "1.0.0"
+    source: "templates/"
+
+conformance:
+  profile: "conformance/moda.yaml"
+  latest_audit: "audits/moda/2026-08-12-initial.yaml"
+  audit_mode: "self-audit"
+
+synchronization:
+  policy: "docs/synchronization.md"
+  state: "review-required"
+  reason: "Initial v1.0.0 package is still being assembled and has not passed the release gate."
