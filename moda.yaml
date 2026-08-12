@@ -70,6 +70,9 @@ packages:
   templates:
     version: "1.0.0"
     source: "templates/"
+  examples:
+    version: "1.0.0"
+    source: "examples/"
 
 conformance:
   profile: "conformance/moda.yaml"

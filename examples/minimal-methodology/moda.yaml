@@ -1,0 +1,49 @@
+moda:
+  manifest_version: "1.0"
+  repository: "https://github.com/mklagenberg/moda"
+  compatibility: "^1.0.0"
+  verified_against: "1.0.0"
+  verified_commit: "0000000000000000000000000000000000000000"
+
+artifact:
+  id: "example-methodology"
+  name: "Example Methodology"
+  kind: "methodology"
+  version: "0.1.0"
+  status: "development"
+  language: "en"
+  repository: "https://example.invalid/example-methodology"
+  license: "Apache-2.0"
+
+adoption:
+  relationship: "conforms_to"
+  mode: "native"
+  claim_stage: "declared"
+  conformance_result: "unknown"
+
+documentation:
+  human_entrypoint: "README.md"
+  agent_entrypoint: "AGENTS.md"
+  specification: "SPEC.md"
+  getting_started: "README.md"
+  invariants: "SPEC.md#contracts-and-evidence"
+  changelog: "README.md"
+  upgrade: "README.md"
+  migrations: "README.md"
+  decisions: "README.md"
+
+components: []
+packages:
+  specification:
+    version: "0.1.0"
+    source: "SPEC.md"
+
+conformance:
+  profile: "conformance/moda.yaml"
+  latest_audit: "audits/moda/initial.yaml"
+  audit_mode: "self-audit"
+
+synchronization:
+  policy: "README.md"
+  state: "unknown"
+  reason: "Example placeholders have not been verified."

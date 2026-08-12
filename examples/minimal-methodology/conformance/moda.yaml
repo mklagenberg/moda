@@ -1,0 +1,18 @@
+framework:
+  id: "moda"
+  required_version: "^1.0.0"
+  verified_against: "1.0.0"
+  verified_commit: "0000000000000000000000000000000000000000"
+
+subject:
+  id: "example-methodology"
+  kind: "methodology"
+  version: "0.1.0"
+  adoption_mode: "native"
+
+assessment:
+  claim_stage: "declared"
+  result: "unknown"
+
+controls: {}
+exceptions: []

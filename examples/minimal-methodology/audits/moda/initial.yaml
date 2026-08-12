@@ -1,0 +1,41 @@
+audit:
+  id: "example-methodology-initial"
+  date: "2026-08-12"
+  mode: "self-audit"
+  supersedes: null
+
+auditor:
+  name: "Example self-assessment"
+  version: "0.1.0"
+  authority: "example-only"
+
+subject:
+  id: "example-methodology"
+  kind: "methodology"
+  version: "0.1.0"
+  repository: "https://example.invalid/example-methodology"
+  commit: "0000000000000000000000000000000000000000"
+
+framework:
+  id: "moda"
+  version: "1.0.0"
+  repository: "https://github.com/mklagenberg/moda"
+  commit: "0000000000000000000000000000000000000000"
+
+result:
+  profile: "methodology"
+  claim_stage: "declared"
+  conformance: "unknown"
+  critical_findings: 0
+  major_findings: 0
+  minor_findings: 0
+  observations: 1
+
+findings:
+  - id: "EXAMPLE-ONLY"
+    severity: "observation"
+    control: "provenance"
+    description: "Placeholder commits are intentionally unresolved."
+    recommendation: "Replace every placeholder with immutable evidence before making a conformance claim."
+
+exceptions: []

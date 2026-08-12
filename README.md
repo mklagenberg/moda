@@ -26,7 +26,7 @@ MODA is an open framework for designing, auditing, packaging, and evolving agent
 This repository is structured and audited with [MODA](https://github.com/mklagenberg/moda). MODA defines an open framework for organizing, designing, auditing, packaging, and evolving agentic methodologies.
 
 - Artifact profile: `framework`
-- MODA version: `1.0.0`
+- MODA compatibility: `^1.0.0`
 - Manifest: [`moda.yaml`](moda.yaml)
 - Conformance profile: [`conformance/moda.yaml`](conformance/moda.yaml)
 <!-- moda:disclosure:end -->

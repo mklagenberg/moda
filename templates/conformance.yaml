@@ -1,0 +1,23 @@
+framework:
+  id: "moda"
+  required_version: "^1.0.0"
+  verified_against: "1.0.0"
+  verified_commit: "<full-moda-release-commit>"
+
+subject:
+  id: "<artifact-id>"
+  kind: "<methodology|framework>"
+  version: "1.0.0"
+  adoption_mode: "<native|retrospective>"
+
+assessment:
+  claim_stage: "mapped"
+  result: "partial"
+
+controls:
+  problem_and_purpose:
+    status: "<satisfied|partial|missing|not-applicable>"
+    evidence: []
+    gaps: []
+
+exceptions: []
