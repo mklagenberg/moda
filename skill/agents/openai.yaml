@@ -1,0 +1,7 @@
+interface:
+  display_name: "MODA"
+  short_description: "Design and audit agentic methodologies"
+  default_prompt: "Use $moda to design or audit an agentic methodology with explicit evidence and conformance status."
+
+policy:
+  allow_implicit_invocation: true

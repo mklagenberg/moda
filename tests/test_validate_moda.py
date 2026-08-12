@@ -6,6 +6,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import yaml
+
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -39,6 +41,13 @@ class ValidateModaTests(unittest.TestCase):
             )
             findings = validate_repository(candidate)
         self.assertTrue(any(item.code == "schema-enum" for item in findings))
+
+    def test_skill_manifest_pins_framework_and_knowledge(self) -> None:
+        manifest = yaml.safe_load((ROOT / "skill" / "manifest.yaml").read_text(encoding="utf-8"))
+        self.assertEqual("1.0.0", manifest["skill"]["version"])
+        self.assertEqual("^1.0.0", manifest["framework"]["compatibility"])
+        self.assertRegex(manifest["knowledge"]["snapshot"], r"^[0-9a-f]{40}$")
+        self.assertFalse(manifest["installation"]["automatic_migration"])
 
 
 if __name__ == "__main__":

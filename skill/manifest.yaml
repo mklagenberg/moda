@@ -1,0 +1,41 @@
+manifest_version: "1.0"
+
+skill:
+  name: "moda"
+  version: "1.0.0"
+  entrypoint: "SKILL.md"
+  canonical_repository: "https://github.com/mklagenberg/moda"
+  canonical_path: "skill/"
+
+framework:
+  name: "moda"
+  compatibility: "^1.0.0"
+  verified_against: "1.0.0"
+
+knowledge:
+  repository: "https://github.com/mklagenberg/moda"
+  snapshot: "ff3966ec7b2bc2f8b77abba00562ab53e5036782"
+  entrypoints:
+    - "SPEC.md"
+    - "docs/taxonomy.md"
+    - "docs/design-model.md"
+    - "docs/repository-contract.md"
+    - "docs/conformance-and-audit.md"
+    - "docs/synchronization.md"
+    - "docs/evaluation-and-safety.md"
+
+synchronization:
+  state: "review-required"
+  reason: "The initial package is being assembled before the v1.0.0 release gate."
+  audit_triggers:
+    - "framework-version-change"
+    - "normative-specification-change"
+    - "knowledge-entrypoint-change"
+    - "skill-procedure-change"
+    - "schema-or-template-change"
+  periodic_review: "P90D"
+
+installation:
+  scope: "per-person-per-environment"
+  lockfile: "skill.lock.yaml"
+  automatic_migration: false
