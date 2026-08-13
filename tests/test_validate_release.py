@@ -79,7 +79,8 @@ class ValidateReleaseTests(unittest.TestCase):
         self.assertIn("release-sync-not-current", codes)
         self.assertIn("audit-content-mismatch", codes)
         self.assertIn("release-blocking-findings", codes)
-        self.assertIn("undated-changelog-version", codes)
+        self.assertNotIn("undated-changelog-version", codes)
+        self.assertIn("release-not-conformant", codes)
 
     def test_complete_repository_controlled_gates_pass(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -102,7 +103,13 @@ class ValidateReleaseTests(unittest.TestCase):
         self.assertTrue(any(item.code == "version-bump-mismatch" for item in findings))
 
     def test_release_commit_rejects_non_evidence_paths(self) -> None:
-        findings = validate_evidence_paths(["audits/moda/release.yaml", "moda.yaml", "SPEC.md"])
+        findings = validate_evidence_paths([
+            "audits/moda/release.yaml",
+            "conformance/moda.yaml",
+            "moda.yaml",
+            "skill/manifest.yaml",
+            "SPEC.md",
+        ])
         self.assertEqual(["SPEC.md"], [item.path for item in findings])
 
     def test_handoff_contains_exact_human_creation_fields(self) -> None:

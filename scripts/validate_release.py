@@ -29,7 +29,13 @@ SEMVER = re.compile(
 STABLE_SEMVER = re.compile(r"^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$")
 COMMIT = re.compile(r"^[0-9a-f]{40}$")
 ZERO_COMMIT = "0" * 40
-EVIDENCE_ONLY_PREFIXES = ("audits/", "conformance/", "releases/", "moda.yaml")
+EVIDENCE_ONLY_PREFIXES = (
+    "audits/",
+    "conformance/",
+    "releases/",
+    "moda.yaml",
+    "skill/manifest.yaml",
+)
 
 
 @dataclass

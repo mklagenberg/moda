@@ -79,6 +79,8 @@ An audit file cannot truthfully contain the hash of the same commit that contain
 
 The release tag points to `release_commit`. Validation MUST prove that the diff from `content_commit` to `release_commit` is evidence-only. If implementation content changes, create a new content commit and repeat the affected validation and audit.
 
+Permitted release metadata includes accepted audit files, conformance evidence, dedicated release records, `moda.yaml`, and `skill/manifest.yaml`. A skill manifest may update only version, compatibility, immutable knowledge snapshot, synchronization state, and equivalent release provenance in this commit; procedural skill behavior belongs in `content_commit` and requires a new audit when changed.
+
 ## Recovery
 
 Prefer a forward fix or revert commit over rewriting shared history. A withdrawn release keeps its tag and receives a deprecation or security notice; a corrected release receives a new version.

@@ -6,6 +6,12 @@ MODA follows Semantic Versioning. A fix is released as a PATCH version when it a
 
 ## [Unreleased]
 
+No unreleased changes.
+
+## [1.0.0] - 2026-08-12
+
+First public contract of Methodology Organization, Design & Audit.
+
 ### Added
 
 - Initial MODA 1.0 framework specification, constitution, taxonomy, design model, repository contract, and governance documentation.
@@ -31,9 +37,3 @@ MODA follows Semantic Versioning. A fix is released as a PATCH version when it a
 - Required literal evolution artifacts instead of allowing generic documentation mappings to satisfy changelog, roadmap, or Decision Record controls.
 - Required operational and normative changes to declare SemVer impact, affected contract surfaces, validation, migration, and recovery.
 - Required a mapped validation policy, deterministic repair-and-rerun evidence, and class-specific PATCH, MINOR, and MAJOR release gates.
-
-## [1.0.0] - Unreleased
-
-First public contract of Methodology Organization, Design & Audit, prepared as a release candidate pending final conformance review.
-
-No `v1.0.0` tag exists yet. Deterministic structural validation passes, while the latest pre-tag self-audit remains `mapped` and `partial`; the tag remains blocked on completed evidence and explicit human release approval.
