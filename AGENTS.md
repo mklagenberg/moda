@@ -16,6 +16,8 @@ Load only the context required for the current task:
 8. Read `ROADMAP.md` when changing product direction or introducing a new distribution capability.
 9. Read `docs/change-management.md` and the active Change Set before operational or normative work.
 10. Read `docs/git-and-release-workflow.md` before changing branches, tags, or release evidence.
+11. Read `docs/validation-and-repair.md` before changing validators or responding to failed checks.
+12. Read `docs/decision-records.md` before adding, rejecting, or superseding a durable structural choice.
 
 Do not turn this file into an encyclopedia. Detailed knowledge belongs in linked documentation.
 
@@ -44,6 +46,7 @@ Do not introduce a requirement that this repository silently violates.
 - Keep human guidance, agent instructions, and machine-readable declarations synchronized without duplicating normative content.
 - Point to evidence; do not copy normative rules into conformance mappings or audit reports.
 - Prefer deterministic validation for schemas, links, versions, manifests, and required files.
+- When deterministic validation fails, interpret its complete findings, make the smallest authorized correction, rerun it, and run affected regression checks. Stop on lack of progress or a human, authority, safety, or compatibility boundary.
 - Require human direction for unresolved intent, risk acceptance, destructive actions, external side effects, security boundaries, and incompatible migration.
 - Never report a source, test, link, or audit as checked when it was not checked.
 
@@ -61,6 +64,8 @@ Do not introduce a requirement that this repository silently violates.
 - Update `MIGRATIONS.md` for incompatible changes.
 - Assess effects on schemas, templates, examples, validators, skill guidance, and conformance fixtures.
 - Run differential change validation against the pull-request base.
+- Use the release readiness validator and class-specific gates before proposing a stable tag.
+- When operating only through MCP without tag or release capability, provide the exact tag, target branch and commit, title, changelog-derived description, and release classification for the user to create after approval.
 - Do not create, move, or reuse a release tag until the release gate passes and a human approves the release.
 
 ## Versioning
@@ -79,6 +84,7 @@ A change is complete only when:
 
 - its intent and scope are explicit;
 - relevant validation has run;
+- failed deterministic findings were corrected and rerun, or an explicit blocker is recorded;
 - evidence and deviations are recorded;
 - affected documentation and generated disclosures are synchronized;
 - the Change Set agrees with the actual diff and records reviewed or non-applicable surfaces with rationale;

@@ -43,6 +43,33 @@ Before tagging a release:
 8. obtain explicit human release approval;
 9. create the immutable tag and publish packages from the approved source.
 
+### Common stable gates
+
+The final stable tag is ready only when:
+
+- the requested version and bump class are valid;
+- every included Change Set is implemented and its declared validation passes;
+- repository, reference, schema, skill, example, package, regression, and representative behavioral checks pass;
+- the exact changelog section is dated and contains the release description;
+- synchronization is current and immutable provenance resolves;
+- security, compatibility, upgrade, migration, rollback, and deprecation effects are resolved;
+- the frozen content commit has accepted audit evidence with no release-blocking findings;
+- the release commit differs from content only through permitted evidence and metadata;
+- required remote checks pass on the exact target commit;
+- a human explicitly approves creation.
+
+Class-specific gates:
+
+| Class | Additional proof |
+|---|---|
+| PATCH | Fix or clarification adds no required behavior or migration; regression covers the defect |
+| MINOR | Capability is backward-compatible; optional behavior and upgrade guidance are synchronized |
+| MAJOR | Breaking effects, migrations, deprecations, recovery, and migrated examples are complete and accepted |
+
+Use `scripts/validate_release.py` for repository-controlled evidence. Remote CI, review, signing, marketplace, and human approval remain separate evidence channels.
+
+The script renders a ready human handoff only when `--remote-gates-passed` explicitly records that an agent or reviewer independently checked the required remote evidence. This flag is an assertion about completed external verification, not a substitute for it.
+
 ## Two-commit release evidence
 
 An audit file cannot truthfully contain the hash of the same commit that contains that audit file. MODA therefore distinguishes:
@@ -55,3 +82,18 @@ The release tag points to `release_commit`. Validation MUST prove that the diff 
 ## Recovery
 
 Prefer a forward fix or revert commit over rewriting shared history. A withdrawn release keeps its tag and receives a deprecation or security notice; a corrected release receives a new version.
+
+## MCP-only handoff
+
+When no local checkout or tag-capable connector is available, the agent verifies the remote branch, exact commits, pull request, CI, changelog, audit, and tag absence through MCP. If the gate passes but the connector cannot create the approved annotated tag and GitHub release, return a complete handoff using `templates/release-handoff.md`.
+
+The handoff supplies, rather than asks the user to invent:
+
+- exact tag;
+- target branch and release commit;
+- release title;
+- release description copied from the dated changelog section;
+- latest/prerelease selection;
+- remaining signing or approval step.
+
+If any gate fails, report `not ready` with failing codes and do not provide language implying that release creation is approved.

@@ -30,7 +30,7 @@ SURFACE_PREFIXES: dict[str, tuple[str, ...]] = {
     "specification": ("SPEC.md",),
     "decisions": ("decisions/",),
     "documentation": ("docs/",),
-    "entrypoints": ("README.md", "AGENTS.md", "GETTING-STARTED.md"),
+    "entrypoints": ("README.md", "AGENTS.md", "CLAUDE.md", "GETTING-STARTED.md"),
     "manifests": ("moda.yaml", "skill/manifest.yaml"),
     "skill": ("skill/",),
     "schemas": ("schemas/",),

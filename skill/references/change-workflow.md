@@ -9,8 +9,8 @@ Use this workflow for operational or normative changes to a MODA artifact.
 5. Set change triggers and declare every required surface as `updated`, `reviewed`, or `not-applicable`. Provide rationale for the latter two.
 6. Update the authoritative specification first for normative changes. Add a Decision Record for durable structural choices.
 7. Synchronize skill procedures and references, manifests, schemas, validators, tests, templates, examples, changelog, upgrade guidance, migrations, roadmap, and conformance evidence according to impact.
-8. Run repository validation, differential change validation, and representative behavioral evaluations.
+8. Run repository validation, differential change validation, and representative behavioral evaluations. Prefer deterministic scripts; interpret every failure, correct its cause, and rerun the same command until it passes or a documented blocker remains.
 9. Review classification, SemVer, unresolved gaps, migration, recovery, and non-applicability with a human reviewer.
-10. For releases, freeze and audit `content_commit`; add only evidence and metadata in `release_commit`; verify the evidence-only diff; require explicit approval before an immutable tag.
+10. For releases, continue with `release-workflow.md`: freeze and audit `content_commit`; add only evidence and metadata in `release_commit`; verify the evidence-only diff; require explicit approval before an immutable tag.
 
 Do not infer that unchanged files were reviewed. Do not silently weaken a normative rule in a host adapter or skill. Do not move or reuse published tags.

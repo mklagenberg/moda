@@ -216,7 +216,7 @@ def validate_repository(root: Path, schema_path: Path | None = None) -> list[Fin
     require_keys(moda, ["manifest_version", "repository", "compatibility", "verified_against", "verified_commit"], "moda.yaml:moda", findings)
     require_keys(artifact, ["id", "name", "kind", "version", "status", "language", "repository", "license"], "moda.yaml:artifact", findings)
     require_keys(adoption, ["relationship", "mode", "claim_stage", "conformance_result"], "moda.yaml:adoption", findings)
-    require_keys(documentation, ["human_entrypoint", "agent_entrypoint", "specification", "getting_started", "invariants", "changelog", "roadmap", "upgrade", "migrations", "decisions", "change_management", "git_workflow"], "moda.yaml:documentation", findings)
+    require_keys(documentation, ["human_entrypoint", "agent_entrypoint", "specification", "getting_started", "invariants", "changelog", "roadmap", "upgrade", "migrations", "decisions", "change_management", "validation", "git_workflow"], "moda.yaml:documentation", findings)
     require_keys(conformance, ["profile", "latest_audit", "audit_mode"], "moda.yaml:conformance", findings)
     require_keys(synchronization, ["policy", "state", "reason"], "moda.yaml:synchronization", findings)
 
@@ -252,6 +252,19 @@ def validate_repository(root: Path, schema_path: Path | None = None) -> list[Fin
             findings.append(Finding("error", "broken-documentation-path", f"Documentation target '{relative}' does not exist.", "moda.yaml"))
         elif "#" in relative:
             validate_local_reference(root, relative, "moda.yaml", findings)
+
+    claude_entrypoint = documentation.get("claude_entrypoint")
+    if isinstance(claude_entrypoint, str):
+        claude_path = root / local_target(claude_entrypoint)
+        if claude_path.is_file():
+            claude_text = claude_path.read_text(encoding="utf-8")
+            if "AGENTS.md" not in claude_text or not re.search(r"\b(canonical|authoritative)\b", claude_text, re.IGNORECASE):
+                findings.append(Finding(
+                    "error",
+                    "invalid-host-shim",
+                    "Claude discovery entrypoint must identify AGENTS.md as the canonical or authoritative instruction file.",
+                    claude_entrypoint,
+                ))
 
     for label, package in packages.items():
         if not isinstance(package, dict):

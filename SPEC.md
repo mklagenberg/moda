@@ -104,6 +104,10 @@ Separate transient context, execution checkpoints, durable methodology state, lo
 
 Define representative scenarios, expected properties, baselines, reviewers, adversarial checks, acceptance thresholds, confidence handling, and criteria for human intervention.
 
+Whenever a property is mechanically decidable at reasonable cost, verification MUST prefer a deterministic script or equivalent reproducible check over model judgment. A failing check MUST produce stable actionable findings. An operating agent MUST interpret those findings, apply an authorized bounded correction, rerun the failed check, and execute affected regression validation until checks pass or an explicit stop condition is reached.
+
+The repair loop MUST stop on lack of progress, insufficient evidence or authority, unsafe or destructive action, incompatible migration, unavailable dependencies, or a required human decision. Validators MUST NOT be weakened merely to make an implementation pass.
+
 ### 4.11 Safety, security, and privacy
 
 Define data boundaries, permissions, secrets handling, destructive-action controls, external side effects, least privilege, auditability, and domain-specific review requirements.
@@ -156,6 +160,7 @@ Every standalone conforming repository MUST provide:
 - migration guidance for incompatible releases;
 - durable decision records for structural choices;
 - a change-management policy for operational and normative work;
+- a mapped validation policy defining deterministic checks, repair, rerun, and stop conditions;
 - a Git and release workflow when Git provides repository provenance;
 - a conformance mapping and latest audit reference.
 
@@ -170,6 +175,8 @@ The literal `README.md`, `AGENTS.md`, `moda.yaml`, and `CHANGELOG.md` files are 
 ### 5.2 Agent disclosure
 
 `AGENTS.md` MUST state that the artifact uses MODA, link to the official repository, direct agents to the manifest and conformance evidence, and prohibit unsupported conformance claims and silent structural migration.
+
+`AGENTS.md` is the canonical vendor-independent instruction entrypoint. When a supported host discovers another conventional file, that file MUST be a thin shim that points to `AGENTS.md`, identifies it as authoritative, and introduces no competing normative rules.
 
 ### 5.3 Machine disclosure
 
@@ -241,6 +248,43 @@ MODA and MODA-conforming versioned artifacts SHOULD use full Semantic Versioning
 - PATCH when a fix or clarification adds no required behavior.
 
 Every release MUST update its changelog. Release tags SHOULD use `vX.Y.Z`, SHOULD be annotated and signed when supported by the trust model, and MUST be immutable after publication. A release tag MUST NOT be created before the declared release gate passes and explicit human approval is recorded.
+
+### 9.1 Stable release gates
+
+Every stable MAJOR, MINOR, or PATCH tag MUST pass all common gates:
+
+1. version and change class agree with Semantic Versioning;
+2. all included operational and normative Change Sets are implemented and validated;
+3. repository, schema, reference, skill, example, package, and representative behavioral checks pass;
+4. changelog contains a dated section for the exact version;
+5. synchronization is `current`, provenance is immutable, and distributed artifacts resolve to the candidate source;
+6. security, privacy, compatibility, upgrade, migration, rollback, and deprecation effects are resolved or explicitly accepted by the authorized human;
+7. `content_commit` is frozen and audited; the accepted audit has no release-blocking finding under repository policy;
+8. `release_commit` contains only permitted evidence and release metadata relative to `content_commit`;
+9. the exact target branch and commit have passing required remote checks;
+10. an authorized human explicitly approves tag and release creation.
+
+Additional class gates apply:
+
+- PATCH: no new required behavior or adopter migration; regression evidence covers the fix or clarification;
+- MINOR: the capability is backward-compatible; new optional behavior, adapters, templates, and upgrade guidance are synchronized;
+- MAJOR: breaking effects, migration steps, deprecation/removal decisions, recovery, and representative migrated examples are complete and explicitly accepted.
+
+Prerelease tags MUST be clearly marked and MUST NOT be presented as stable conformance evidence.
+
+### 9.2 MCP-only release handoff
+
+When an agent has repository access only through MCP or another remote connector and cannot create the approved annotated tag or release, it MUST provide the user an exact creation handoff after every verifiable gate passes. The handoff MUST include:
+
+- tag `vX.Y.Z`;
+- target branch;
+- exact target `release_commit`;
+- release title;
+- release description copied from the matching changelog section;
+- latest or prerelease selection;
+- unresolved manual approval or signing steps.
+
+The agent MUST NOT claim that the tag or release exists. If any gate is incomplete, it MUST report `not ready`, list the failing gates, and withhold creation instructions that imply readiness.
 
 ## 10. Change and migration safety
 

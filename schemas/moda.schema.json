@@ -49,7 +49,7 @@
     },
     "documentation": {
       "type": "object",
-      "required": ["human_entrypoint", "agent_entrypoint", "specification", "getting_started", "invariants", "changelog", "roadmap", "upgrade", "migrations", "decisions", "change_management", "git_workflow"],
+      "required": ["human_entrypoint", "agent_entrypoint", "specification", "getting_started", "invariants", "changelog", "roadmap", "upgrade", "migrations", "decisions", "change_management", "validation", "git_workflow"],
       "additionalProperties": {"type": "string"}
     },
     "components": {

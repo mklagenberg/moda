@@ -1,0 +1,48 @@
+change:
+  id: "0013-agent-validation-and-release-gates"
+  title: "Add agent discovery, deterministic repair, and release gates"
+  class: "normative"
+  semver: "minor"
+  status: "implemented"
+  structural: true
+  summary: "Close decision, host discovery, validation repair, and MCP-only release handoff gaps."
+
+git:
+  base_ref: "7efa0984d05f6e28be2c27ed9b54becc3f610d6b"
+  target_branch: "main"
+
+triggers:
+  normative_rule: true
+  public_path: true
+  package_contract: false
+  security_behavior: false
+  release: false
+
+affected:
+  specification: {status: "updated", paths: ["SPEC.md"]}
+  decisions: {status: "updated", paths: ["decisions/0013-canonical-agent-instructions-and-host-shims.md", "decisions/0014-deterministic-validation-and-repair-loop.md", "decisions/0015-release-gates-and-mcp-handoff.md", "decisions/0016-public-repository-language.md", "decisions/0017-apache-2-license.md", "decisions/0018-v1-conformance-profiles.md"]}
+  documentation: {status: "updated", paths: ["docs/decision-records.md", "docs/validation-and-repair.md", "docs/git-and-release-workflow.md", "docs/repository-contract.md"]}
+  entrypoints: {status: "updated", paths: ["README.md", "AGENTS.md", "CLAUDE.md", "GETTING-STARTED.md"]}
+  manifests: {status: "updated", paths: ["moda.yaml", "skill/manifest.yaml", "examples/minimal-methodology/moda.yaml"]}
+  skill: {status: "updated", paths: ["skill/SKILL.md", "skill/references/change-workflow.md", "skill/references/release-workflow.md"]}
+  schemas: {status: "updated", paths: ["schemas/moda.schema.json"]}
+  validators: {status: "updated", paths: ["scripts/validate_moda.py", "scripts/validate_change.py", "scripts/validate_release.py"]}
+  tests: {status: "updated", paths: ["tests/test_validate_moda.py", "tests/test_validate_change.py", "tests/test_validate_release.py"]}
+  ci: {status: "updated", paths: [".github/pull_request_template.md"]}
+  templates: {status: "updated", paths: ["templates/CLAUDE.md", "templates/release-handoff.md", "templates/moda.yaml"]}
+  examples: {status: "updated", paths: ["examples/minimal-methodology/CLAUDE.md", "examples/minimal-methodology/moda.yaml", "examples/minimal-methodology/docs/change-management.md"]}
+  changelog: {status: "updated", paths: ["CHANGELOG.md"]}
+  upgrade: {status: "updated", paths: ["UPGRADE.md"]}
+  migrations: {status: "reviewed", paths: ["MIGRATIONS.md"], rationale: "The capability is backward-compatible and introduces no released migration."}
+  roadmap: {status: "reviewed", paths: ["ROADMAP.md"], rationale: "This closes integrity gaps without changing current product direction."}
+  conformance: {status: "updated", paths: ["conformance/moda.yaml"]}
+
+validation:
+  commands:
+    - "python scripts/validate_moda.py ."
+    - "python scripts/validate_moda.py examples/minimal-methodology"
+    - "python scripts/validate_change.py --base 7efa0984d05f6e28be2c27ed9b54becc3f610d6b --head HEAD"
+    - "python scripts/validate_release.py --version 1.0.0 --bump initial --content-commit <sha> --release-commit <sha>"
+    - "python -m unittest discover -s tests -v"
+  evidence:
+    - ".github/workflows/validate.yml"

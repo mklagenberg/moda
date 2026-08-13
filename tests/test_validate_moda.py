@@ -108,6 +108,26 @@ class ValidateModaTests(unittest.TestCase):
             findings = validate_repository(candidate)
         self.assertTrue(any(item.code in {"missing-key", "schema-required"} for item in findings))
 
+    def test_missing_validation_policy_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            candidate = self.copy_repository(directory)
+            manifest = candidate / "moda.yaml"
+            manifest.write_text(
+                manifest.read_text(encoding="utf-8").replace(
+                    '  validation: "docs/validation-and-repair.md"\n', "", 1
+                ),
+                encoding="utf-8",
+            )
+            findings = validate_repository(candidate)
+        self.assertTrue(any(item.code in {"missing-key", "schema-required"} for item in findings))
+
+    def test_claude_entrypoint_must_point_to_canonical_agents_file(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            candidate = self.copy_repository(directory)
+            (candidate / "CLAUDE.md").write_text("# Independent instructions\n", encoding="utf-8")
+            findings = validate_repository(candidate)
+        self.assertTrue(any(item.code == "invalid-host-shim" for item in findings))
+
     def test_broken_markdown_evidence_anchor_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             candidate = self.copy_repository(directory)

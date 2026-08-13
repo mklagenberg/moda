@@ -44,7 +44,7 @@ controls:
     evidence: ["CONSTITUTION.md#6-context-and-state-are-designed", "SPEC.md#49-state-context-and-knowledge"]
   quality_and_evaluation:
     status: "satisfied"
-    evidence: ["docs/evaluation-and-safety.md", "scripts/validate_moda.py", "tests/test_validate_moda.py", "examples/minimal-methodology/", ".github/workflows/validate.yml"]
+    evidence: ["docs/evaluation-and-safety.md", "docs/validation-and-repair.md", "scripts/validate_moda.py", "scripts/validate_release.py", "tests/test_validate_moda.py", "tests/test_validate_release.py", "examples/minimal-methodology/", ".github/workflows/validate.yml"]
   safety_security_and_privacy:
     status: "satisfied"
     evidence: ["SPEC.md#411-safety-security-and-privacy", "docs/evaluation-and-safety.md"]
@@ -60,10 +60,10 @@ controls:
     gaps: ["Host-specific ChatGPT, Claude, and other distribution packages and their end-to-end installation/update fixtures are roadmap work."]
   evolution:
     status: "satisfied"
-    evidence: ["CHANGELOG.md", "ROADMAP.md", "decisions/", "changes/", "docs/change-management.md", "docs/git-and-release-workflow.md", "UPGRADE.md", "MIGRATIONS.md", "SPEC.md#9-semantic-versioning"]
+    evidence: ["CHANGELOG.md", "ROADMAP.md", "decisions/", "changes/", "docs/decision-records.md", "docs/change-management.md", "docs/git-and-release-workflow.md", "scripts/validate_release.py", "UPGRADE.md", "MIGRATIONS.md", "SPEC.md#9-semantic-versioning"]
   repository_contract:
     status: "partial"
-    evidence: ["README.md", "AGENTS.md", "moda.yaml", "CHANGELOG.md", "ROADMAP.md", "decisions/", "changes/", "docs/repository-contract.md", "scripts/validate_change.py", "tests/test_validate_change.py"]
+    evidence: ["README.md", "AGENTS.md", "CLAUDE.md", "moda.yaml", "CHANGELOG.md", "ROADMAP.md", "decisions/", "changes/", "docs/repository-contract.md", "docs/validation-and-repair.md", "scripts/validate_change.py", "scripts/validate_release.py", "tests/test_validate_change.py", "tests/test_validate_release.py"]
     gaps: ["The expanded repository contract and its negative fixtures await the next immutable release audit."]
 
 exceptions: []

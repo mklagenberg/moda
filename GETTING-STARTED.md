@@ -26,6 +26,7 @@ Create the human, agent, and machine entry points:
 
 - `README.md`;
 - `AGENTS.md`;
+- host discovery shims such as `CLAUDE.md` when supported;
 - `moda.yaml`;
 - `CHANGELOG.md`.
 - `ROADMAP.md` while the artifact is actively developed.
@@ -60,4 +61,10 @@ Use short-lived branches and pull requests. Keep `main` as the permanent integra
 
 ## 10. Verify before release
 
+Prefer deterministic scripts for every mechanically decidable property. When a check fails, interpret the complete findings, make the smallest authorized correction, rerun the failed check, and execute affected regression validation. Stop rather than loop when evidence no longer changes or a human, authority, safety, destructive-action, or compatibility decision is required.
+
 Freeze a content commit, run deterministic validation and representative evaluations, review unresolved findings, and audit that immutable content. Add only accepted evidence and release metadata in a release commit, verify the evidence-only diff, update changelog and migration guidance, and obtain human approval before tagging the release commit.
+
+For PATCH, prove that the change adds no required behavior or migration. For MINOR, prove backward compatibility and synchronize new optional capabilities. For MAJOR, complete and accept migration, deprecation, recovery, and migrated examples.
+
+If the agent has only MCP access and cannot create the tag or release, it must give the user the exact tag, target branch and commit, release title, changelog-derived description, and latest/prerelease choice after the gate passes.

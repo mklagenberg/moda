@@ -14,6 +14,7 @@ from scripts.validate_change import parse_name_status, validate_changes, validat
 
 
 IMPACT = Path("changes/0011-specification-driven-change-control/impact.yaml")
+AGENT_IMPACT = Path("changes/0013-agent-validation-and-release-gates/impact.yaml")
 
 
 class ValidateChangeTests(unittest.TestCase):
@@ -30,10 +31,27 @@ class ValidateChangeTests(unittest.TestCase):
                 changed.update(surface["paths"])
         return changed
 
+    def declared_changed_files(self, root: Path, impact_path: Path) -> set[str]:
+        impact = yaml.safe_load((root / impact_path).read_text(encoding="utf-8"))
+        changed = {impact_path.as_posix(), (impact_path.parent / "proposal.md").as_posix()}
+        for surface in impact["affected"].values():
+            if surface["status"] == "updated":
+                changed.update(surface["paths"])
+        return changed
+
     def test_current_change_set_is_valid(self) -> None:
         changed = self.current_changed_files(ROOT)
         errors = [finding for finding in validate_impact(ROOT, ROOT / IMPACT, changed) if finding.severity == "error"]
         self.assertEqual([], errors, "\n".join(f"{item.code}: {item.message}" for item in errors))
+
+    def test_agent_release_change_set_is_valid(self) -> None:
+        changed = self.declared_changed_files(ROOT, AGENT_IMPACT)
+        errors = [finding for finding in validate_impact(ROOT, ROOT / AGENT_IMPACT, changed) if finding.severity == "error"]
+        self.assertEqual([], errors, "\n".join(f"{item.code}: {item.message}" for item in errors))
+
+    def test_claude_entrypoint_is_a_protected_surface(self) -> None:
+        findings = validate_changes(ROOT, {"CLAUDE.md"})
+        self.assertTrue(any(item.code == "missing-change-set" for item in findings))
 
     def test_protected_change_without_change_set_is_rejected(self) -> None:
         findings = validate_changes(ROOT, {"SPEC.md"})

@@ -29,7 +29,7 @@ The canonical knowledge source is `https://github.com/mklagenberg/moda`. The ski
 - Design or audit scaffolds, portable skills, host adapters, distribution packages, installation, or update checks → read `references/distribution-workflow.md`.
 - Change a specification, skill, manifest, schema, repository path, package contract, security behavior, or release state → read `references/change-workflow.md`.
 - Resolve version or knowledge drift → retrieve canonical `docs/synchronization.md` at the knowledge snapshot declared in `manifest.yaml`.
-- Prepare an upgrade or release → read canonical `UPGRADE.md`, `MIGRATIONS.md`, and `CHANGELOG.md`.
+- Prepare an upgrade or release → read `references/release-workflow.md` plus canonical `UPGRADE.md`, `MIGRATIONS.md`, and `CHANGELOG.md`.
 
 ## Operating rules
 
@@ -38,12 +38,14 @@ The canonical knowledge source is `https://github.com/mklagenberg/moda`. The ski
 - Separate identity declaration, conformance mapping, and audit evidence.
 - Point to authoritative evidence instead of copying normative rules.
 - Classify substantive evolution and validate its Change Set against the actual diff.
+- Prefer deterministic validation scripts. Interpret their output, correct the cause, and rerun the same checks until they pass or a documented blocker remains.
 - Classify consequential work as deterministic, agent-reasoned, tool-executed, human-decided, or hybrid.
 - Keep stable core contracts separate from vendor- or model-specific adapters.
 - Preserve user-authored content and existing repository conventions unless an approved migration changes them.
 - Do not claim verification for a source, link, test, or audit that was not checked.
 - Do not treat self-audit as external certification.
 - Do not write, migrate, release, or accept risk without the authority required by the target repository and current user request.
+- Do not present tag-creation instructions as ready until every applicable release gate has passed.
 
 ## Completion
 
@@ -54,5 +56,5 @@ Report:
 - satisfied, partial, missing, and non-applicable controls;
 - findings, exceptions, and unresolved decisions;
 - files created or changed;
-- validation performed;
+- validation performed, including corrected failures and successful reruns;
 - synchronization state and next required action.

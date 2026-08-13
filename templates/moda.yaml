@@ -25,6 +25,7 @@ adoption:
 documentation:
   human_entrypoint: "README.md"
   agent_entrypoint: "AGENTS.md"
+  claude_entrypoint: "CLAUDE.md"
   specification: "SPEC.md"
   getting_started: "GETTING-STARTED.md"
   invariants: "CONSTITUTION.md"
@@ -35,7 +36,9 @@ documentation:
   upgrade: "UPGRADE.md"
   migrations: "MIGRATIONS.md"
   decisions: "decisions/"
+  decision_policy: "docs/decision-records.md"
   change_management: "docs/change-management.md"
+  validation: "docs/validation-and-repair.md"
   git_workflow: "docs/git-and-release-workflow.md"
 
 components: []

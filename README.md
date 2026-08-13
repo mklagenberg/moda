@@ -12,6 +12,8 @@ MODA is an open framework for designing, auditing, packaging, and evolving agent
 - conformance profiles and evidence-based audits for existing or new methodologies;
 - versioning, provenance, synchronization, upgrade, and recovery requirements;
 - specification-driven change control with differential impact validation;
+- deterministic validation with bounded agent repair and regression loops;
+- stable release gates and complete MCP-only tag handoffs;
 - source topology, scaffold profiles, portable skills, host adapters, distribution, and runtime update-awareness requirements;
 - model- and vendor-independent packaging guidance.
 
@@ -44,6 +46,7 @@ MODA is its own first adopter. Its repository structure, specification, audit mo
 5. Read the [Disclaimer](DISCLAIMER.md) before using MODA in high-impact contexts.
 6. Read the [Roadmap](ROADMAP.md) for current direction without treating it as a release commitment.
 7. Read [Change Management](docs/change-management.md) and the [Git and Release Workflow](docs/git-and-release-workflow.md) before substantive evolution work.
+8. Read [Validation and Repair](docs/validation-and-repair.md) and the [Decision Record Policy](docs/decision-records.md) when evolving contracts.
 
 Agents must start with [AGENTS.md](AGENTS.md).
 
@@ -62,6 +65,7 @@ Agents must start with [AGENTS.md](AGENTS.md).
 - `scripts/` — deterministic validators.
 - `decisions/` — durable design decisions about MODA itself.
 - `changes/` — proposals and machine-readable impact declarations for substantive changes.
+- `CLAUDE.md` — Claude discovery shim pointing to canonical `AGENTS.md` instructions.
 
 ## Version status
 

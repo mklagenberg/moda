@@ -10,6 +10,8 @@ The repository contract exposes one system through three interfaces.
 
 `AGENTS.md` defines reading order, authority boundaries, stop conditions, change protocol, validation, and links to authoritative knowledge. It remains concise through progressive disclosure.
 
+Host-specific discovery files are thin shims. For example, `CLAUDE.md` points to `AGENTS.md` and introduces no independent normative rules.
+
 ## Machine interface
 
 `moda.yaml` declares identity, version, profile, provenance, documentation topology, components, packages, conformance mapping, and audit reference. Schemas and validators check deterministic properties.
@@ -29,5 +31,9 @@ The manifest identifies canonical source, scaffold profiles, skills, adapters, d
 ## Version-control interface
 
 The Git workflow defines branch lifetime, pull-request evidence, protected integration, immutable tags, release gates, and recovery. Release provenance separates audited content from the evidence-only release commit. See [Git and Release Workflow](git-and-release-workflow.md).
+
+## Validation interface
+
+Deterministic scripts decide reproducible properties. Agents interpret findings, correct the authoritative source within scope, rerun the failing check, and execute regression validation until success or a declared stop condition. See [Deterministic Validation and Repair](validation-and-repair.md).
 
 The same fact should have one authoritative source. Other interfaces link to it.

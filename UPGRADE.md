@@ -11,4 +11,10 @@ MODA upgrades are explicit, reviewable, and non-destructive.
 7. Update `moda.yaml`, the conformance profile, and exact verified source reference.
 8. Run a new audit and preserve the previous audit as immutable history.
 
+Release class determines adopter action:
+
+- PATCH: no migration or new required behavior; apply the fix and rerun affected regression checks.
+- MINOR: backward-compatible capability; review optional configuration, adapters, templates, and new guidance before enabling it.
+- MAJOR: follow `MIGRATIONS.md`, complete required transformations and recovery planning, and re-audit affected conformance controls.
+
 MODA tools MUST NOT silently overwrite user-authored content or change substantive conformance decisions.
