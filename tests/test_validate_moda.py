@@ -21,6 +21,10 @@ class ValidateModaTests(unittest.TestCase):
         shutil.copytree(ROOT, candidate, ignore=shutil.ignore_patterns("__pycache__"))
         return candidate
 
+    def latest_audit_path(self, candidate: Path) -> Path:
+        manifest = yaml.safe_load((candidate / "moda.yaml").read_text(encoding="utf-8"))
+        return candidate / manifest["conformance"]["latest_audit"]
+
     def test_repository_is_structurally_valid(self) -> None:
         errors = [finding for finding in validate_repository(ROOT) if finding.severity == "error"]
         self.assertEqual([], errors, "\n".join(f"{item.code}: {item.message}" for item in errors))
@@ -63,7 +67,7 @@ class ValidateModaTests(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
-            audit = candidate / "audits" / "moda" / "2026-08-12-pre-tag-architecture-review.yaml"
+            audit = self.latest_audit_path(candidate)
             audit.write_text(
                 audit.read_text(encoding="utf-8").replace(
                     '  version: "1.0.0"', '  version: "1.0.0-rc.1+fixture"', 1
@@ -77,14 +81,9 @@ class ValidateModaTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             candidate = self.copy_repository(directory)
             manifest = candidate / "moda.yaml"
-            manifest.write_text(
-                manifest.read_text(encoding="utf-8").replace(
-                    '  verified_commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"',
-                    '  verified_commit: "0000000000000000000000000000000000000000"',
-                    1,
-                ),
-                encoding="utf-8",
-            )
+            value = yaml.safe_load(manifest.read_text(encoding="utf-8"))
+            value["moda"]["verified_commit"] = "0" * 40
+            manifest.write_text(yaml.safe_dump(value, sort_keys=False), encoding="utf-8")
             findings = validate_repository(candidate)
         self.assertTrue(any(item.code == "invalid-commit" for item in findings))
 
@@ -155,11 +154,10 @@ class ValidateModaTests(unittest.TestCase):
     def test_audit_finding_count_mismatch_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             candidate = self.copy_repository(directory)
-            audit = candidate / "audits" / "moda" / "2026-08-12-pre-tag-architecture-review.yaml"
-            audit.write_text(
-                audit.read_text(encoding="utf-8").replace("  major_findings: 4", "  major_findings: 3", 1),
-                encoding="utf-8",
-            )
+            audit = self.latest_audit_path(candidate)
+            value = yaml.safe_load(audit.read_text(encoding="utf-8"))
+            value["result"]["major_findings"] = 1
+            audit.write_text(yaml.safe_dump(value, sort_keys=False), encoding="utf-8")
             findings = validate_repository(candidate)
         self.assertTrue(any(item.code == "audit-count-mismatch" for item in findings))
 
