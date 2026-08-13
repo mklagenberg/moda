@@ -1,0 +1,57 @@
+audit:
+  id: "moda-v1.0.0-release-2026-08-12"
+  date: "2026-08-12"
+  mode: "self-audit"
+  supersedes: "audits/moda/2026-08-12-pre-tag-architecture-review.yaml"
+
+auditor:
+  name: "MODA client-zero release audit"
+  version: "1.0.0"
+  authority: "project-self-assessment"
+
+subject:
+  id: "moda"
+  kind: "framework"
+  version: "1.0.0"
+  repository: "https://github.com/mklagenberg/moda"
+  commit: "75a3277a199c7da6114d2380017481ad45119e78"
+
+framework:
+  id: "moda"
+  version: "1.0.0"
+  repository: "https://github.com/mklagenberg/moda"
+  commit: "75a3277a199c7da6114d2380017481ad45119e78"
+
+result:
+  profile: "framework"
+  claim_stage: "verified"
+  conformance: "conformant"
+  critical_findings: 0
+  major_findings: 0
+  minor_findings: 0
+  observations: 0
+
+findings: []
+
+resolved_in_review:
+  - "MODA-RELEASE-002: bootstrap release evidence now separates the frozen content commit from the evidence-only release commit and requires explicit approval before tagging."
+  - "MODA-CONTRACT-002: literal evolution artifacts, semantic paths, Decision Records, Change Sets, and negative fixtures are enforced deterministically."
+  - "MODA-COMPOSITION-001: source repositories, distribution packages, generated instances, installations, scaffold profiles, and ownership classes are distinct contracts."
+  - "MODA-SKILL-UPDATE-001: the portable skill requires first-activation freshness and security checks, immutable provenance, independent notification channels, and no silent self-update."
+  - "MODA-AUDIT-002: audit finding counts, claim stages, conformance states, controls, and evidence references are validated."
+  - "MODA-PROVENANCE-002: placeholder commits and unpinned Git package sources are rejected."
+  - "MODA-EVIDENCE-002: local Markdown anchors and evidence paths are validated."
+  - "MODA-ROADMAP-001: the root roadmap separates future outcomes from release commitments and delivered changelog history."
+
+validation:
+  repository: "passed"
+  minimal_example: "passed"
+  change_set_diff: "passed"
+  skill_structure: "passed"
+  unit_tests: "36 passed"
+  content_ci:
+    run_id: 31658204187
+    commit: "75a3277a199c7da6114d2380017481ad45119e78"
+    conclusion: "success"
+
+exceptions: []

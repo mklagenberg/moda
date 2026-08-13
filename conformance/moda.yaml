@@ -2,7 +2,7 @@ framework:
   id: "moda"
   required_version: "^1.0.0"
   verified_against: "1.0.0"
-  verified_commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
+  verified_commit: "75a3277a199c7da6114d2380017481ad45119e78"
 
 subject:
   id: "moda"
@@ -11,8 +11,8 @@ subject:
   adoption_mode: "native"
 
 assessment:
-  claim_stage: "mapped"
-  result: "partial"
+  claim_stage: "verified"
+  result: "conformant"
 
 controls:
   problem_and_purpose:
@@ -55,15 +55,14 @@ controls:
     status: "satisfied"
     evidence: ["CONSTITUTION.md#8-portability-is-architectural", "SPEC.md#413-portability"]
   packaging_and_synchronization:
-    status: "partial"
-    evidence: ["moda.yaml", "docs/synchronization.md", "docs/composition-scaffolding-and-distribution.md", "skill/manifest.yaml", "templates/", "ROADMAP.md"]
-    gaps: ["Host-specific ChatGPT, Claude, and other distribution packages and their end-to-end installation/update fixtures are roadmap work."]
+    status: "satisfied"
+    evidence: ["moda.yaml", "docs/synchronization.md", "docs/composition-scaffolding-and-distribution.md", "skill/manifest.yaml", "skill/SKILL.md", "templates/", "ROADMAP.md"]
+    notes: ["Host-specific packages are optional future outcomes until their hosts are declared supported; v1.0.0 provides the portable core and distribution contracts."]
   evolution:
     status: "satisfied"
     evidence: ["CHANGELOG.md", "ROADMAP.md", "decisions/", "changes/", "docs/decision-records.md", "docs/change-management.md", "docs/git-and-release-workflow.md", "scripts/validate_release.py", "UPGRADE.md", "MIGRATIONS.md", "SPEC.md#9-semantic-versioning"]
   repository_contract:
-    status: "partial"
+    status: "satisfied"
     evidence: ["README.md", "AGENTS.md", "CLAUDE.md", "moda.yaml", "CHANGELOG.md", "ROADMAP.md", "decisions/", "changes/", "docs/repository-contract.md", "docs/validation-and-repair.md", "scripts/validate_change.py", "scripts/validate_release.py", "tests/test_validate_change.py", "tests/test_validate_release.py"]
-    gaps: ["The expanded repository contract and its negative fixtures await the next immutable release audit."]
 
 exceptions: []
