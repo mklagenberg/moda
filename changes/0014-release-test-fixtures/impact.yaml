@@ -1,0 +1,48 @@
+change:
+  id: "0014-release-test-fixtures"
+  title: "Isolate release-state test fixtures"
+  class: "editorial"
+  semver: "none"
+  status: "implemented"
+  structural: false
+  summary: "Remove lifecycle-state and historical-audit coupling from release validator tests."
+
+git:
+  base_ref: "5320d68d6d31b5c735b76bbc6ad36250bf70e97c"
+  target_branch: "main"
+
+triggers:
+  normative_rule: false
+  public_path: false
+  package_contract: false
+  security_behavior: false
+  release: false
+
+affected:
+  specification: {status: "reviewed", paths: ["SPEC.md"], rationale: "No obligation or conformance meaning changes."}
+  decisions: {status: "not-applicable", paths: [], rationale: "The repair creates no durable structural choice."}
+  documentation: {status: "reviewed", paths: ["docs/change-management.md", "docs/validation-and-repair.md"], rationale: "Existing deterministic repair and Change Set guidance already covers this work."}
+  entrypoints: {status: "not-applicable", paths: [], rationale: "Human and agent discovery behavior is unchanged."}
+  manifests: {status: "reviewed", paths: ["moda.yaml", "skill/manifest.yaml"], rationale: "Tests now consume manifest-selected state without changing either manifest contract."}
+  skill: {status: "reviewed", paths: ["skill/SKILL.md"], rationale: "No operational skill instruction changes."}
+  schemas: {status: "reviewed", paths: ["schemas/moda.schema.json", "schemas/change-impact.schema.json"], rationale: "Fixture construction does not change a machine contract."}
+  validators: {status: "reviewed", paths: ["scripts/validate_moda.py", "scripts/validate_release.py"], rationale: "The production validators are unchanged; only their tests are repaired."}
+  tests: {status: "updated", paths: ["tests/test_validate_moda.py", "tests/test_validate_release.py"]}
+  ci: {status: "reviewed", paths: [".github/workflows/validate.yml"], rationale: "The existing workflow runs all required checks."}
+  templates: {status: "not-applicable", paths: [], rationale: "No scaffold or reusable template behavior changes."}
+  examples: {status: "reviewed", paths: ["examples/minimal-methodology/"], rationale: "The representative example remains valid and unchanged."}
+  changelog: {status: "reviewed", paths: ["CHANGELOG.md"], rationale: "The test-only repair is not a notable released capability or behavior change."}
+  upgrade: {status: "not-applicable", paths: [], rationale: "No adopter action is required."}
+  migrations: {status: "not-applicable", paths: [], rationale: "No compatibility boundary changes."}
+  roadmap: {status: "not-applicable", paths: [], rationale: "Product direction is unchanged."}
+  conformance: {status: "reviewed", paths: ["conformance/moda.yaml", "audits/moda/"], rationale: "The repair enables lifecycle-independent evidence tests without changing conformance evidence."}
+
+validation:
+  commands:
+    - "python scripts/validate_moda.py ."
+    - "python scripts/validate_moda.py examples/minimal-methodology"
+    - "python scripts/validate_change.py --base 5320d68d6d31b5c735b76bbc6ad36250bf70e97c --head HEAD"
+    - "python /root/.codex/skills/oai/skill-creator/scripts/quick_validate.py skill"
+    - "python -m unittest discover -s tests -v"
+  evidence:
+    - ".github/workflows/validate.yml"
