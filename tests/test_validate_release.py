@@ -71,10 +71,43 @@ class ValidateReleaseTests(unittest.TestCase):
             encoding="utf-8",
         )
 
-    def test_current_repository_is_not_release_ready(self) -> None:
-        findings, _ = validate_release(
-            ROOT, "1.0.0", "initial", CONTENT_COMMIT, RELEASE_COMMIT, check_git=False
-        )
+    def test_pre_release_fixture_is_not_release_ready(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            candidate = self.copy_repository(directory)
+
+            manifest_path = candidate / "moda.yaml"
+            manifest = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+            manifest["adoption"]["claim_stage"] = "mapped"
+            manifest["adoption"]["conformance_result"] = "partial"
+            manifest["synchronization"]["state"] = "review-required"
+            self.write_yaml(manifest_path, manifest)
+
+            profile_path = candidate / manifest["conformance"]["profile"]
+            profile = yaml.safe_load(profile_path.read_text(encoding="utf-8"))
+            profile["assessment"]["claim_stage"] = "mapped"
+            profile["assessment"]["result"] = "partial"
+            self.write_yaml(profile_path, profile)
+
+            audit_path = candidate / manifest["conformance"]["latest_audit"]
+            audit = yaml.safe_load(audit_path.read_text(encoding="utf-8"))
+            audit["subject"]["commit"] = "a" * 40
+            audit["result"].update({
+                "claim_stage": "mapped",
+                "conformance": "partial",
+                "major_findings": 1,
+            })
+            audit["findings"] = [{
+                "id": "FIXTURE-001",
+                "severity": "major",
+                "control": "release_fixture",
+                "description": "Synthetic blocking finding for the pre-release test fixture.",
+                "recommendation": "Resolve the fixture before release.",
+            }]
+            self.write_yaml(audit_path, audit)
+
+            findings, _ = validate_release(
+                candidate, "1.0.0", "initial", CONTENT_COMMIT, RELEASE_COMMIT, check_git=False
+            )
         codes = {item.code for item in findings}
         self.assertIn("release-sync-not-current", codes)
         self.assertIn("audit-content-mismatch", codes)
