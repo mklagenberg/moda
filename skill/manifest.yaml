@@ -1,0 +1,57 @@
+manifest_version: "1.0"
+
+skill:
+  name: "moda"
+  version: "1.0.0"
+  entrypoint: "SKILL.md"
+  canonical_repository: "https://github.com/mklagenberg/moda"
+  canonical_path: "skill/"
+
+framework:
+  name: "moda"
+  compatibility: "^1.0.0"
+  verified_against: "1.0.0"
+  verified_commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
+
+knowledge:
+  repository: "https://github.com/mklagenberg/moda"
+  snapshot: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
+  entrypoints:
+    - "SPEC.md"
+    - "docs/taxonomy.md"
+    - "docs/design-model.md"
+    - "docs/repository-contract.md"
+    - "docs/conformance-and-audit.md"
+    - "docs/synchronization.md"
+    - "docs/composition-scaffolding-and-distribution.md"
+    - "docs/change-management.md"
+    - "docs/decision-records.md"
+    - "docs/validation-and-repair.md"
+    - "docs/git-and-release-workflow.md"
+    - "docs/evaluation-and-safety.md"
+
+synchronization:
+  state: "review-required"
+  reason: "The contract now covers agent discovery, deterministic repair, and release gates in addition to change control; the skill remains pinned to the last audited snapshot until the next release review."
+  audit_triggers:
+    - "framework-version-change"
+    - "normative-specification-change"
+    - "knowledge-entrypoint-change"
+    - "skill-procedure-change"
+    - "schema-or-template-change"
+    - "change-impact-or-release-workflow-change"
+  periodic_review: "P90D"
+
+installation:
+  scope: "per-person-per-environment"
+  lockfile: "skill.lock.yaml"
+  automatic_migration: false
+
+updates:
+  check_on_first_activation: true
+  normal_ttl: "P7D"
+  security_ttl: "P1D"
+  canonical_manifest: "https://github.com/mklagenberg/moda/releases"
+  security_advisories: "https://github.com/mklagenberg/moda/security/advisories"
+  unavailable_state: "unknown"
+  automatic_self_update: false

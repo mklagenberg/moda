@@ -1,0 +1,60 @@
+audit:
+  id: "moda-self-audit-2026-08-12-v1.0.0-rc1"
+  date: "2026-08-12"
+  mode: "self-audit"
+  supersedes: "audits/moda/2026-08-12-initial.yaml"
+
+auditor:
+  name: "MODA bootstrap self-audit"
+  version: "1.0.0"
+  authority: "project-self-assessment"
+
+subject:
+  id: "moda"
+  kind: "framework"
+  version: "1.0.0"
+  repository: "https://github.com/mklagenberg/moda"
+  commit: "fd56189ecd995736de14aa7f1340130a989b792a"
+
+framework:
+  id: "moda"
+  version: "1.0.0"
+  repository: "https://github.com/mklagenberg/moda"
+  commit: "fd56189ecd995736de14aa7f1340130a989b792a"
+
+result:
+  profile: "framework"
+  claim_stage: "verified"
+  conformance: "conformant"
+  critical_findings: 0
+  major_findings: 0
+  minor_findings: 0
+  observations: 1
+
+findings:
+  - id: "MODA-RELEASE-001"
+    severity: "observation"
+    control: "evolution"
+    description: "Version 1.0.0 is declared while the release tag intentionally does not exist."
+    recommendation: "Create the tag only after explicit human release approval."
+
+resolved_findings:
+  - id: "MODA-PACKAGE-001"
+    resolution: "Validator, skill, templates, and example packages are present with declared provenance and synchronization controls."
+    evidence: ["scripts/validate_moda.py", "skill/manifest.yaml", "templates/", "examples/"]
+  - id: "MODA-EVAL-001"
+    resolution: "Deterministic validation, tests, a representative example, and continuous validation are present and passing."
+    evidence: ["tests/test_validate_moda.py", "examples/minimal-methodology/", ".github/workflows/validate.yml"]
+
+validation:
+  - command: "python3 scripts/validate_moda.py ."
+    result: "passed"
+  - command: "python3 scripts/validate_moda.py examples/minimal-methodology"
+    result: "passed"
+  - command: "python3 -m unittest discover -s tests -v"
+    result: "passed"
+    tests: 5
+  - command: "python3 quick_validate.py skill"
+    result: "passed"
+
+exceptions: []

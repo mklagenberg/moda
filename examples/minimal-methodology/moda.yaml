@@ -1,0 +1,58 @@
+moda:
+  manifest_version: "1.0"
+  repository: "https://github.com/mklagenberg/moda"
+  compatibility: "^1.0.0"
+  verified_against: "1.0.0"
+  verified_commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
+
+artifact:
+  id: "example-methodology"
+  name: "Example Methodology"
+  kind: "methodology"
+  version: "0.1.0"
+  status: "development"
+  language: "en"
+  repository: "https://github.com/mklagenberg/moda/tree/909c83cd5b82d5840b40eb87f6b2ed4885a71c94/examples/minimal-methodology"
+  license: "Apache-2.0"
+
+adoption:
+  relationship: "conforms_to"
+  mode: "native"
+  claim_stage: "declared"
+  conformance_result: "unknown"
+
+documentation:
+  human_entrypoint: "README.md"
+  agent_entrypoint: "AGENTS.md"
+  claude_entrypoint: "CLAUDE.md"
+  specification: "SPEC.md"
+  getting_started: "README.md"
+  invariants: "SPEC.md#contracts-and-evidence"
+  changelog: "CHANGELOG.md"
+  roadmap: "ROADMAP.md"
+  upgrade: "README.md"
+  migrations: "README.md"
+  decisions: "decisions/"
+  change_management: "docs/change-management.md"
+  validation: "docs/change-management.md#validation-and-repair"
+  git_workflow: "docs/change-management.md#git-and-releases"
+
+components: []
+packages:
+  specification:
+    role: "normative-specification"
+    version: "0.1.0"
+    source: "SPEC.md"
+    source_kind: "local"
+
+installations: []
+
+conformance:
+  profile: "conformance/moda.yaml"
+  latest_audit: "audits/moda/initial.yaml"
+  audit_mode: "self-audit"
+
+synchronization:
+  policy: "README.md"
+  state: "unknown"
+  reason: "The fixture is structurally valid but makes no conformance claim."

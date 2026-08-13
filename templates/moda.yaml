@@ -1,0 +1,62 @@
+moda:
+  manifest_version: "1.0"
+  repository: "https://github.com/mklagenberg/moda"
+  compatibility: "^1.0.0"
+  verified_against: "1.0.0"
+  verified_commit: "<full-moda-release-commit>"
+
+artifact:
+  id: "<artifact-id>"
+  name: "<artifact-name>"
+  kind: "methodology"
+  domain: "<domain>"
+  version: "1.0.0"
+  status: "development"
+  language: "en"
+  repository: "<canonical-repository-url>"
+  license: "<SPDX-license-id>"
+
+adoption:
+  relationship: "conforms_to"
+  mode: "native"
+  claim_stage: "declared"
+  conformance_result: "unknown"
+
+documentation:
+  human_entrypoint: "README.md"
+  agent_entrypoint: "AGENTS.md"
+  claude_entrypoint: "CLAUDE.md"
+  specification: "SPEC.md"
+  getting_started: "GETTING-STARTED.md"
+  invariants: "CONSTITUTION.md"
+  best_practices: "BEST-PRACTICES.md"
+  limitations: "DISCLAIMER.md"
+  changelog: "CHANGELOG.md"
+  roadmap: "ROADMAP.md"
+  upgrade: "UPGRADE.md"
+  migrations: "MIGRATIONS.md"
+  decisions: "decisions/"
+  decision_policy: "docs/decision-records.md"
+  change_management: "docs/change-management.md"
+  validation: "docs/validation-and-repair.md"
+  git_workflow: "docs/git-and-release-workflow.md"
+
+components: []
+packages:
+  specification:
+    role: "normative-specification"
+    version: "1.0.0"
+    source: "SPEC.md"
+    source_kind: "local"
+
+installations: []
+
+conformance:
+  profile: "conformance/moda.yaml"
+  latest_audit: "audits/moda/<date>.yaml"
+  audit_mode: "self-audit"
+
+synchronization:
+  policy: "<synchronization-policy-path>"
+  state: "unknown"
+  reason: "Initial declaration has not been verified."

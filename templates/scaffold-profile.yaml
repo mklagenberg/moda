@@ -1,0 +1,38 @@
+profile:
+  id: "<profile-id>"
+  version: "1.0.0"
+  purpose: "<instance type and outcome>"
+
+methodology:
+  compatibility: ">=1.0.0 <2.0.0"
+
+engine:
+  version: "1.0.0"
+  source_repository: "<canonical-repository-url>"
+  source_commit: "<immutable-commit>"
+
+inputs:
+  - name: "<parameter>"
+    required: true
+    default: null
+
+outputs:
+  - path: "AGENTS.md"
+    operation: "create"
+    ownership: "generated-once"
+  - path: "<managed-path>"
+    operation: "create"
+    ownership: "managed-structure"
+
+conflicts:
+  default: "stop-and-report"
+  allow_silent_overwrite: false
+
+upgrade:
+  automatic: false
+  managed_ownership_only: true
+  migration_guide: "<path-or-url>"
+
+postconditions:
+  validator: "<command>"
+  conformance_claim: "declared"

@@ -1,0 +1,81 @@
+audit:
+  id: "moda-pre-tag-architecture-review-2026-08-12"
+  date: "2026-08-12"
+  mode: "self-audit"
+  supersedes: "audits/moda/2026-08-12-v1.0.0-rc1.yaml"
+
+auditor:
+  name: "MODA pre-tag architecture review"
+  version: "1.0.0"
+  authority: "project-self-assessment"
+
+subject:
+  id: "moda"
+  kind: "framework"
+  version: "1.0.0"
+  repository: "https://github.com/mklagenberg/moda"
+  commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
+
+framework:
+  id: "moda"
+  version: "1.0.0"
+  repository: "https://github.com/mklagenberg/moda"
+  commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
+
+result:
+  profile: "framework"
+  claim_stage: "mapped"
+  conformance: "partial"
+  critical_findings: 0
+  major_findings: 4
+  minor_findings: 3
+  observations: 1
+
+findings:
+  - id: "MODA-RELEASE-002"
+    severity: "major"
+    control: "versions_and_provenance"
+    description: "The previous client-zero claim treated an unreleased 1.0.0 candidate as verified and conformant without a formal bootstrap rule."
+    recommendation: "Keep the claim mapped and partial until the final release commit is audited and approved."
+  - id: "MODA-CONTRACT-002"
+    severity: "major"
+    control: "repository_contract"
+    description: "The validator accepted generic documentation mappings in place of literal changelog and Decision Record capabilities."
+    recommendation: "Enforce literal artifacts and semantic evidence paths with negative fixtures."
+  - id: "MODA-COMPOSITION-001"
+    severity: "major"
+    control: "packaging_and_synchronization"
+    description: "The package model treated every source as a local path and could not represent remote source, generated instances, or installed state."
+    recommendation: "Separate source topology, distribution packages, scaffold provenance, and installations."
+  - id: "MODA-SKILL-UPDATE-001"
+    severity: "major"
+    control: "packaging_and_synchronization"
+    description: "The skill contract did not require first-activation update and security awareness or independently managed notification channels."
+    recommendation: "Add portable core, adapter, distribution, and runtime update contracts with host fixtures."
+  - id: "MODA-AUDIT-002"
+    severity: "minor"
+    control: "quality_and_evaluation"
+    description: "Audit counts and control statuses lacked complete deterministic consistency checks."
+    recommendation: "Validate severity counts, enums, and mapped evidence."
+  - id: "MODA-PROVENANCE-002"
+    severity: "minor"
+    control: "versions_and_provenance"
+    description: "Placeholder all-zero commits were structurally accepted."
+    recommendation: "Reject unresolved placeholder commits."
+  - id: "MODA-EVIDENCE-002"
+    severity: "minor"
+    control: "quality_and_evaluation"
+    description: "Markdown evidence anchors were not checked."
+    recommendation: "Validate local Markdown anchors deterministically."
+  - id: "MODA-ROADMAP-001"
+    severity: "observation"
+    control: "evolution"
+    description: "The repository had no concise direction record distinct from issues, release commitments, decisions, and changelog history."
+    recommendation: "Maintain a root outcome-oriented roadmap while MODA is actively developed."
+
+resolved_in_review:
+  - "The specification now distinguishes source repositories, distribution packages, generated instances, and installations."
+  - "Scaffold profiles, generated-file ownership, portable skill cores, host adapters, and first-activation update behavior are normative."
+  - "ROADMAP.md and Decision Records 0007 through 0010 preserve the session decisions."
+
+exceptions: []

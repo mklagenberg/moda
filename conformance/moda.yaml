@@ -1,0 +1,69 @@
+framework:
+  id: "moda"
+  required_version: "^1.0.0"
+  verified_against: "1.0.0"
+  verified_commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
+
+subject:
+  id: "moda"
+  kind: "framework"
+  version: "1.0.0"
+  adoption_mode: "native"
+
+assessment:
+  claim_stage: "mapped"
+  result: "partial"
+
+controls:
+  problem_and_purpose:
+    status: "satisfied"
+    evidence: ["README.md", "SPEC.md#1-purpose"]
+  activation_and_proportionality:
+    status: "satisfied"
+    evidence: ["SPEC.md#42-activation-and-proportionality"]
+  human_reference_practice:
+    status: "satisfied"
+    evidence: ["CONSTITUTION.md#2-human-work-comes-before-agent-decomposition", "SPEC.md#43-human-reference-practice"]
+  inputs_outputs_and_invariants:
+    status: "satisfied"
+    evidence: ["CONSTITUTION.md", "SPEC.md#44-inputs-outputs-and-invariants"]
+  decomposition_and_control_flow:
+    status: "satisfied"
+    evidence: ["SPEC.md#45-decomposition-and-control-flow", "docs/design-model.md"]
+  distribution_of_agency:
+    status: "satisfied"
+    evidence: ["CONSTITUTION.md#3-agency-is-explicit", "SPEC.md#46-distribution-of-agency"]
+  orchestration:
+    status: "satisfied"
+    evidence: ["SPEC.md#47-orchestration"]
+  contracts:
+    status: "satisfied"
+    evidence: ["SPEC.md#48-contracts"]
+  state_context_and_knowledge:
+    status: "satisfied"
+    evidence: ["CONSTITUTION.md#6-context-and-state-are-designed", "SPEC.md#49-state-context-and-knowledge"]
+  quality_and_evaluation:
+    status: "satisfied"
+    evidence: ["docs/evaluation-and-safety.md", "docs/validation-and-repair.md", "scripts/validate_moda.py", "scripts/validate_release.py", "tests/test_validate_moda.py", "tests/test_validate_release.py", "examples/minimal-methodology/", ".github/workflows/validate.yml"]
+  safety_security_and_privacy:
+    status: "satisfied"
+    evidence: ["SPEC.md#411-safety-security-and-privacy", "docs/evaluation-and-safety.md"]
+  failure_and_recovery:
+    status: "satisfied"
+    evidence: ["SPEC.md#412-failure-and-recovery"]
+  portability:
+    status: "satisfied"
+    evidence: ["CONSTITUTION.md#8-portability-is-architectural", "SPEC.md#413-portability"]
+  packaging_and_synchronization:
+    status: "partial"
+    evidence: ["moda.yaml", "docs/synchronization.md", "docs/composition-scaffolding-and-distribution.md", "skill/manifest.yaml", "templates/", "ROADMAP.md"]
+    gaps: ["Host-specific ChatGPT, Claude, and other distribution packages and their end-to-end installation/update fixtures are roadmap work."]
+  evolution:
+    status: "satisfied"
+    evidence: ["CHANGELOG.md", "ROADMAP.md", "decisions/", "changes/", "docs/decision-records.md", "docs/change-management.md", "docs/git-and-release-workflow.md", "scripts/validate_release.py", "UPGRADE.md", "MIGRATIONS.md", "SPEC.md#9-semantic-versioning"]
+  repository_contract:
+    status: "partial"
+    evidence: ["README.md", "AGENTS.md", "CLAUDE.md", "moda.yaml", "CHANGELOG.md", "ROADMAP.md", "decisions/", "changes/", "docs/repository-contract.md", "docs/validation-and-repair.md", "scripts/validate_change.py", "scripts/validate_release.py", "tests/test_validate_change.py", "tests/test_validate_release.py"]
+    gaps: ["The expanded repository contract and its negative fixtures await the next immutable release audit."]
+
+exceptions: []

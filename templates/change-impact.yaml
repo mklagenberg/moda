@@ -1,0 +1,44 @@
+change:
+  id: "<change-id>"
+  title: "<change title>"
+  class: "<editorial|operational|normative>"
+  semver: "<none|patch|minor|major>"
+  status: "<proposed|accepted|implemented|superseded>"
+  structural: false
+  summary: "<bounded outcome>"
+
+git:
+  base_ref: "<base branch, tag, or commit>"
+  target_branch: "main"
+
+triggers:
+  normative_rule: false
+  public_path: false
+  package_contract: false
+  security_behavior: false
+  release: false
+
+affected:
+  specification: {status: "reviewed", paths: ["SPEC.md"], rationale: "<why unchanged>"}
+  decisions: {status: "not-applicable", paths: [], rationale: "<why not applicable>"}
+  documentation: {status: "reviewed", paths: ["docs/"], rationale: "<why unchanged>"}
+  entrypoints: {status: "reviewed", paths: ["README.md", "AGENTS.md"], rationale: "<why unchanged>"}
+  manifests: {status: "reviewed", paths: ["moda.yaml"], rationale: "<why unchanged>"}
+  skill: {status: "reviewed", paths: ["skill/"], rationale: "<why unchanged>"}
+  schemas: {status: "reviewed", paths: ["schemas/"], rationale: "<why unchanged>"}
+  validators: {status: "reviewed", paths: ["scripts/"], rationale: "<why unchanged>"}
+  tests: {status: "reviewed", paths: ["tests/"], rationale: "<why unchanged>"}
+  ci: {status: "reviewed", paths: [".github/"], rationale: "<why unchanged>"}
+  templates: {status: "reviewed", paths: ["templates/"], rationale: "<why unchanged>"}
+  examples: {status: "reviewed", paths: ["examples/"], rationale: "<why unchanged>"}
+  changelog: {status: "reviewed", paths: ["CHANGELOG.md"], rationale: "<why unchanged>"}
+  upgrade: {status: "not-applicable", paths: [], rationale: "<why not applicable>"}
+  migrations: {status: "not-applicable", paths: [], rationale: "<why not applicable>"}
+  roadmap: {status: "not-applicable", paths: [], rationale: "<why not applicable>"}
+  conformance: {status: "reviewed", paths: ["conformance/"], rationale: "<why unchanged>"}
+
+validation:
+  commands:
+    - "python scripts/validate_moda.py ."
+    - "python scripts/validate_change.py --base <base-ref> --head HEAD"
+  evidence: []

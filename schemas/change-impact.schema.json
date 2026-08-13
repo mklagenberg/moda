@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/mklagenberg/moda/blob/main/schemas/change-impact.schema.json",
+  "title": "MODA Change Impact",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["change", "git", "triggers", "affected", "validation"],
+  "properties": {
+    "change": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "class", "semver", "status", "structural", "summary"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "title": {"type": "string", "minLength": 1},
+        "class": {"enum": ["editorial", "operational", "normative"]},
+        "semver": {"enum": ["none", "patch", "minor", "major"]},
+        "status": {"enum": ["proposed", "accepted", "implemented", "superseded"]},
+        "structural": {"type": "boolean"},
+        "summary": {"type": "string", "minLength": 1}
+      }
+    },
+    "git": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["base_ref", "target_branch"],
+      "properties": {
+        "base_ref": {"type": "string", "minLength": 1},
+        "target_branch": {"type": "string", "minLength": 1}
+      }
+    },
+    "triggers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["normative_rule", "public_path", "package_contract", "security_behavior", "release"],
+      "properties": {
+        "normative_rule": {"type": "boolean"},
+        "public_path": {"type": "boolean"},
+        "package_contract": {"type": "boolean"},
+        "security_behavior": {"type": "boolean"},
+        "release": {"type": "boolean"}
+      }
+    },
+    "affected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "specification", "decisions", "documentation", "entrypoints", "manifests",
+        "skill", "schemas", "validators", "tests", "ci", "templates", "examples",
+        "changelog", "upgrade", "migrations", "roadmap", "conformance"
+      ],
+      "properties": {
+        "specification": {"$ref": "#/$defs/surface"},
+        "decisions": {"$ref": "#/$defs/surface"},
+        "documentation": {"$ref": "#/$defs/surface"},
+        "entrypoints": {"$ref": "#/$defs/surface"},
+        "manifests": {"$ref": "#/$defs/surface"},
+        "skill": {"$ref": "#/$defs/surface"},
+        "schemas": {"$ref": "#/$defs/surface"},
+        "validators": {"$ref": "#/$defs/surface"},
+        "tests": {"$ref": "#/$defs/surface"},
+        "ci": {"$ref": "#/$defs/surface"},
+        "templates": {"$ref": "#/$defs/surface"},
+        "examples": {"$ref": "#/$defs/surface"},
+        "changelog": {"$ref": "#/$defs/surface"},
+        "upgrade": {"$ref": "#/$defs/surface"},
+        "migrations": {"$ref": "#/$defs/surface"},
+        "roadmap": {"$ref": "#/$defs/surface"},
+        "conformance": {"$ref": "#/$defs/surface"}
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commands", "evidence"],
+      "properties": {
+        "commands": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "evidence": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  },
+  "$defs": {
+    "surface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "paths"],
+      "properties": {
+        "status": {"enum": ["updated", "reviewed", "not-applicable"]},
+        "paths": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "rationale": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+audit:
+  id: "moda-self-audit-2026-08-12-initial"
+  date: "2026-08-12"
+  mode: "self-audit"
+  supersedes: null
+
+auditor:
+  name: "MODA bootstrap audit"
+  version: "1.0.0"
+  authority: "project-self-assessment"
+
+subject:
+  id: "moda"
+  kind: "framework"
+  version: "1.0.0"
+  repository: "https://github.com/mklagenberg/moda"
+  commit: "987a8def70925b69983af4417518275f8fefd375"
+
+framework:
+  id: "moda"
+  version: "1.0.0"
+  repository: "https://github.com/mklagenberg/moda"
+  commit: "987a8def70925b69983af4417518275f8fefd375"
+
+result:
+  profile: "framework"
+  claim_stage: "mapped"
+  conformance: "partial"
+  critical_findings: 0
+  major_findings: 2
+  minor_findings: 0
+  observations: 1
+
+findings:
+  - id: "MODA-PACKAGE-001"
+    severity: "major"
+    control: "packaging_and_synchronization"
+    description: "Declared validator, skill, template, and example packages are not present in the audited commit."
+    recommendation: "Add and validate the operational packages before the release gate."
+  - id: "MODA-EVAL-001"
+    severity: "major"
+    control: "quality_and_evaluation"
+    description: "The evaluation policy exists, but executable structural validation and fixtures are not present."
+    recommendation: "Add deterministic validation and representative fixtures."
+  - id: "MODA-RELEASE-001"
+    severity: "observation"
+    control: "evolution"
+    description: "Version 1.0.0 is declared while the release tag intentionally does not exist."
+    recommendation: "Keep the release untagged until the release gate passes."
+
+exceptions: []

@@ -1,0 +1,24 @@
+lock_version: "1.0"
+
+skill:
+  name: "moda"
+  version: "1.0.0"
+  source_repository: "https://github.com/mklagenberg/moda"
+  source_commit: "<exact-installed-skill-commit>"
+
+framework:
+  version: "1.0.0"
+  source_commit: "<exact-moda-release-commit>"
+
+knowledge:
+  snapshot: "<exact-knowledge-commit>"
+
+installation:
+  installed_at: "<ISO-8601-timestamp>"
+  environment: "<environment-identifier>"
+  adapter: "<chatgpt|claude|codex|other>"
+
+audit:
+  state: "<current|review-required|incompatible|broken|unknown>"
+  checked_at: "<ISO-8601-timestamp>"
+  security_checked_at: "<ISO-8601-timestamp>"

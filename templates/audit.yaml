@@ -1,0 +1,35 @@
+audit:
+  id: "<audit-id>"
+  date: "<YYYY-MM-DD>"
+  mode: "<self-audit|independent-audit>"
+  supersedes: null
+
+auditor:
+  name: "<auditor-name>"
+  version: "<auditor-version>"
+  authority: "<authority>"
+
+subject:
+  id: "<artifact-id>"
+  kind: "<methodology|framework>"
+  version: "<subject-version>"
+  repository: "<repository-url>"
+  commit: "<full-subject-commit>"
+
+framework:
+  id: "moda"
+  version: "<moda-version>"
+  repository: "https://github.com/mklagenberg/moda"
+  commit: "<full-moda-commit>"
+
+result:
+  profile: "<methodology|framework>"
+  claim_stage: "verified"
+  conformance: "<conformant|partial|nonconformant|unknown>"
+  critical_findings: 0
+  major_findings: 0
+  minor_findings: 0
+  observations: 0
+
+findings: []
+exceptions: []

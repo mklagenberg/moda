@@ -1,0 +1,47 @@
+change:
+  id: "0011-specification-driven-change-control"
+  title: "Add specification-driven change control"
+  class: "normative"
+  semver: "minor"
+  status: "implemented"
+  structural: true
+  summary: "Prevent contract drift through explicit impact declarations and differential validation."
+
+git:
+  base_ref: "e02fb9345eee7032b865ec41b62d9f23d3aeac01"
+  target_branch: "main"
+
+triggers:
+  normative_rule: true
+  public_path: true
+  package_contract: true
+  security_behavior: false
+  release: false
+
+affected:
+  specification: {status: "updated", paths: ["SPEC.md"]}
+  decisions: {status: "updated", paths: ["decisions/0011-specification-driven-change-control.md", "decisions/0012-content-and-release-commits.md"]}
+  documentation: {status: "updated", paths: ["docs/change-management.md", "docs/git-and-release-workflow.md", "docs/repository-contract.md", "docs/synchronization.md"]}
+  entrypoints: {status: "updated", paths: ["README.md", "AGENTS.md", "GETTING-STARTED.md"]}
+  manifests: {status: "updated", paths: ["moda.yaml", "skill/manifest.yaml", "examples/minimal-methodology/moda.yaml"]}
+  skill: {status: "updated", paths: ["skill/SKILL.md", "skill/references/change-workflow.md"]}
+  schemas: {status: "updated", paths: ["schemas/moda.schema.json", "schemas/change-impact.schema.json"]}
+  validators: {status: "updated", paths: ["scripts/validate_moda.py", "scripts/validate_change.py"]}
+  tests: {status: "updated", paths: ["tests/test_validate_moda.py", "tests/test_validate_change.py"]}
+  ci: {status: "updated", paths: [".github/workflows/validate.yml", ".github/pull_request_template.md"]}
+  templates: {status: "updated", paths: ["templates/moda.yaml", "templates/change-proposal.md", "templates/change-impact.yaml"]}
+  examples: {status: "updated", paths: ["examples/minimal-methodology/docs/change-management.md", "examples/minimal-methodology/moda.yaml"]}
+  changelog: {status: "updated", paths: ["CHANGELOG.md"]}
+  upgrade: {status: "reviewed", paths: ["UPGRADE.md"], rationale: "No released adopter exists before v1.0.0; the release candidate incorporates the contract directly."}
+  migrations: {status: "not-applicable", paths: [], rationale: "The change is backward-compatible and precedes the first public release."}
+  roadmap: {status: "updated", paths: ["ROADMAP.md"]}
+  conformance: {status: "updated", paths: ["conformance/moda.yaml"]}
+
+validation:
+  commands:
+    - "python scripts/validate_moda.py ."
+    - "python scripts/validate_moda.py examples/minimal-methodology"
+    - "python scripts/validate_change.py --base e02fb9345eee7032b865ec41b62d9f23d3aeac01 --head HEAD"
+    - "python -m unittest discover -s tests -v"
+  evidence:
+    - ".github/workflows/validate.yml"

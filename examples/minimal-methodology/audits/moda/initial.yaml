@@ -1,0 +1,41 @@
+audit:
+  id: "example-methodology-initial"
+  date: "2026-08-12"
+  mode: "self-audit"
+  supersedes: null
+
+auditor:
+  name: "Example self-assessment"
+  version: "0.1.0"
+  authority: "example-only"
+
+subject:
+  id: "example-methodology"
+  kind: "methodology"
+  version: "0.1.0"
+  repository: "https://github.com/mklagenberg/moda/tree/909c83cd5b82d5840b40eb87f6b2ed4885a71c94/examples/minimal-methodology"
+  commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
+
+framework:
+  id: "moda"
+  version: "1.0.0"
+  repository: "https://github.com/mklagenberg/moda"
+  commit: "909c83cd5b82d5840b40eb87f6b2ed4885a71c94"
+
+result:
+  profile: "methodology"
+  claim_stage: "declared"
+  conformance: "unknown"
+  critical_findings: 0
+  major_findings: 0
+  minor_findings: 0
+  observations: 1
+
+findings:
+  - id: "EXAMPLE-ONLY"
+    severity: "observation"
+    control: "provenance"
+    description: "The fixture demonstrates structure only and intentionally makes no conformance claim."
+    recommendation: "Run a complete audit before raising the claim stage beyond declared."
+
+exceptions: []
