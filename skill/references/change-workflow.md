@@ -4,7 +4,7 @@ Use this workflow for operational or normative changes to a MODA artifact.
 
 1. Read the canonical `docs/change-management.md` and `docs/git-and-release-workflow.md` at the knowledge snapshot declared in `manifest.yaml`.
 2. Classify the change as editorial, operational, or normative. Escalate apparently editorial work when it changes behavior, public structure, compatibility, security, or conformance meaning.
-3. Create `changes/<change-id>/proposal.md` and `impact.yaml` from the canonical templates when a Change Set is required.
+3. Create `changes/<change-id>/proposal.md` and `impact.yaml` from the canonical templates when a Change Set is required. Start a new linear Change Set from the commit that completed the preceding one. If multiple Change Sets share an equally near base, select the intended impact explicitly instead of guessing.
 4. Write the problem, current and proposed contracts, alternatives, risks, acceptance criteria, compatibility, migration, and recovery before claiming implementation is complete.
 5. Set change triggers and declare every required surface as `updated`, `reviewed`, or `not-applicable`. Provide rationale for the latter two.
 6. Update the authoritative specification first for normative changes. Add a Decision Record for durable structural choices.

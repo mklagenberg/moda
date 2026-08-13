@@ -103,6 +103,71 @@ def git_changed_files(root: Path, base: str, head: str) -> set[str]:
     return parse_name_status(result.stdout)
 
 
+def git_commit_distance(root: Path, base: str, head: str) -> int | None:
+    """Return the number of commits from an ancestor base to head."""
+    ancestor = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", base, head],
+        cwd=root,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if ancestor.returncode:
+        return None
+    result = subprocess.run(
+        ["git", "rev-list", "--count", f"{base}..{head}"],
+        cwd=root,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode:
+        return None
+    try:
+        return int(result.stdout.strip())
+    except ValueError:
+        return None
+
+
+def select_nearest_impact(impact_distances: list[tuple[Path, int]]) -> tuple[Path | None, list[Finding]]:
+    """Select the active Change Set whose declared base is nearest to HEAD."""
+    if not impact_distances:
+        return None, []
+    nearest_distance = min(distance for _, distance in impact_distances)
+    nearest = [path for path, distance in impact_distances if distance == nearest_distance]
+    if len(nearest) != 1:
+        labels = ", ".join(path.as_posix() for path in nearest)
+        return None, [Finding(
+            "error",
+            "ambiguous-active-change-set",
+            f"Multiple Change Sets have the nearest declared base ({labels}); select one explicitly with --impact.",
+            "changes/",
+        )]
+    return nearest[0], []
+
+
+def discover_active_impact(root: Path, impact_paths: list[Path], head: str) -> tuple[Path | None, list[Finding]]:
+    """Resolve current linear work without applying it to historical Change Sets."""
+    findings: list[Finding] = []
+    distances: list[tuple[Path, int]] = []
+    for impact_path in impact_paths:
+        data = load_yaml(impact_path, findings)
+        declared_git = data.get("git", {}) if isinstance(data, dict) else {}
+        declared_base = declared_git.get("base_ref") if isinstance(declared_git, dict) else None
+        relative = impact_path.relative_to(root).as_posix()
+        if not isinstance(declared_base, str) or not declared_base:
+            findings.append(Finding("error", "invalid-declared-base", "Change Set must declare a non-empty git.base_ref.", relative))
+            continue
+        distance = git_commit_distance(root, declared_base, head)
+        if distance is None:
+            findings.append(Finding("error", "invalid-declared-base", f"Declared base '{declared_base}' is not an available ancestor of HEAD.", relative))
+            continue
+        distances.append((impact_path, distance))
+    selected, selection_findings = select_nearest_impact(distances)
+    findings.extend(selection_findings)
+    return selected, findings
+
+
 def load_yaml(path: Path, findings: list[Finding]) -> dict[str, Any]:
     try:
         value = yaml.safe_load(path.read_text(encoding="utf-8"))
@@ -328,11 +393,16 @@ def main() -> int:
         print(f"ERROR change-diff: {exc}", file=sys.stderr)
         return 2
 
-    impact_paths = [path.resolve() for path in args.impact] if args.impact else discover_impacts(root, changed)
+    explicit_impacts = args.impact is not None
+    impact_paths = [path.resolve() for path in args.impact] if explicit_impacts else discover_impacts(root, changed)
     if change_set_required(changed) and not impact_paths:
         findings = [Finding("error", "missing-change-set", "Protected contract surfaces changed without a MODA Change Set.", "changes/")]
     elif args.base and impact_paths:
         findings = []
+        if not explicit_impacts:
+            active_impact, selection_findings = discover_active_impact(root, impact_paths, args.head)
+            findings.extend(selection_findings)
+            impact_paths = [active_impact] if active_impact is not None else []
         for impact_path in impact_paths:
             impact_data = load_yaml(impact_path, findings)
             declared_git = impact_data.get("git", {}) if isinstance(impact_data, dict) else {}

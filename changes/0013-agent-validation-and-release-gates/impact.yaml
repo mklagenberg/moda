@@ -21,7 +21,7 @@ triggers:
 affected:
   specification: {status: "updated", paths: ["SPEC.md"]}
   decisions: {status: "updated", paths: ["decisions/0013-canonical-agent-instructions-and-host-shims.md", "decisions/0014-deterministic-validation-and-repair-loop.md", "decisions/0015-release-gates-and-mcp-handoff.md", "decisions/0016-public-repository-language.md", "decisions/0017-apache-2-license.md", "decisions/0018-v1-conformance-profiles.md"]}
-  documentation: {status: "updated", paths: ["docs/decision-records.md", "docs/validation-and-repair.md", "docs/git-and-release-workflow.md", "docs/repository-contract.md"]}
+  documentation: {status: "updated", paths: ["docs/decision-records.md", "docs/validation-and-repair.md", "docs/git-and-release-workflow.md", "docs/repository-contract.md", "docs/change-management.md"]}
   entrypoints: {status: "updated", paths: ["README.md", "AGENTS.md", "CLAUDE.md", "GETTING-STARTED.md"]}
   manifests: {status: "updated", paths: ["moda.yaml", "skill/manifest.yaml", "examples/minimal-methodology/moda.yaml"]}
   skill: {status: "updated", paths: ["skill/SKILL.md", "skill/references/change-workflow.md", "skill/references/release-workflow.md"]}

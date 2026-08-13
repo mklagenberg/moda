@@ -31,6 +31,8 @@ Every required surface in `impact.yaml` is classified as:
 
 The declaration is not proof by itself. Differential validation compares it with the Git diff, and review evaluates whether the rationale is credible.
 
+When a linear branch contains historical and current Change Sets, automatic discovery selects the Change Set whose declared base is the nearest available ancestor of `HEAD`. Earlier Change Sets retain their original validation evidence and are not reinterpreted as covering later work. Equal nearest bases are ambiguous and require explicit `--impact` selection or separate linear tranches.
+
 ## Change workflow
 
 1. Classify the change before implementation.

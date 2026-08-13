@@ -10,7 +10,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 
-from scripts.validate_change import parse_name_status, validate_changes, validate_impact  # noqa: E402
+from scripts.validate_change import parse_name_status, select_nearest_impact, validate_changes, validate_impact  # noqa: E402
 
 
 IMPACT = Path("changes/0011-specification-driven-change-control/impact.yaml")
@@ -52,6 +52,16 @@ class ValidateChangeTests(unittest.TestCase):
     def test_claude_entrypoint_is_a_protected_surface(self) -> None:
         findings = validate_changes(ROOT, {"CLAUDE.md"})
         self.assertTrue(any(item.code == "missing-change-set" for item in findings))
+
+    def test_nearest_declared_base_selects_active_change_set(self) -> None:
+        selected, findings = select_nearest_impact([(IMPACT, 3), (AGENT_IMPACT, 1)])
+        self.assertEqual(AGENT_IMPACT, selected)
+        self.assertEqual([], findings)
+
+    def test_equal_nearest_bases_require_explicit_selection(self) -> None:
+        selected, findings = select_nearest_impact([(IMPACT, 1), (AGENT_IMPACT, 1)])
+        self.assertIsNone(selected)
+        self.assertTrue(any(item.code == "ambiguous-active-change-set" for item in findings))
 
     def test_protected_change_without_change_set_is_rejected(self) -> None:
         findings = validate_changes(ROOT, {"SPEC.md"})
