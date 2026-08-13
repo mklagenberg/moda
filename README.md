@@ -11,6 +11,7 @@ MODA is an open framework for designing, auditing, packaging, and evolving agent
 - a repository contract with separate entry points for humans, agents, and machines;
 - conformance profiles and evidence-based audits for existing or new methodologies;
 - versioning, provenance, synchronization, upgrade, and recovery requirements;
+- specification-driven change control with differential impact validation;
 - source topology, scaffold profiles, portable skills, host adapters, distribution, and runtime update-awareness requirements;
 - model- and vendor-independent packaging guidance.
 
@@ -32,7 +33,7 @@ This repository is structured and audited with [MODA](https://github.com/mklagen
 - Conformance profile: [`conformance/moda.yaml`](conformance/moda.yaml)
 <!-- moda:disclosure:end -->
 
-MODA is its own first conforming artifact. Its repository structure, specification, audit model, skill synchronization, and release process must satisfy the same requirements it defines for adopters.
+MODA is its own first adopter. Its repository structure, specification, audit model, skill synchronization, and release process must satisfy the same requirements it defines for adopters before it claims conformance.
 
 ## Start here
 
@@ -42,6 +43,7 @@ MODA is its own first conforming artifact. Its repository structure, specificati
 4. Read [Best Practices](BEST-PRACTICES.md) for application guidance.
 5. Read the [Disclaimer](DISCLAIMER.md) before using MODA in high-impact contexts.
 6. Read the [Roadmap](ROADMAP.md) for current direction without treating it as a release commitment.
+7. Read [Change Management](docs/change-management.md) and the [Git and Release Workflow](docs/git-and-release-workflow.md) before substantive evolution work.
 
 Agents must start with [AGENTS.md](AGENTS.md).
 
@@ -59,6 +61,7 @@ Agents must start with [AGENTS.md](AGENTS.md).
 - `skill/` — operational adapter for AI agents.
 - `scripts/` — deterministic validators.
 - `decisions/` — durable design decisions about MODA itself.
+- `changes/` — proposals and machine-readable impact declarations for substantive changes.
 
 ## Version status
 

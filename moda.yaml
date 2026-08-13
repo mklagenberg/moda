@@ -37,6 +37,8 @@ documentation:
   migrations: "MIGRATIONS.md"
   decisions: "decisions/"
   composition: "docs/composition-scaffolding-and-distribution.md"
+  change_management: "docs/change-management.md"
+  git_workflow: "docs/git-and-release-workflow.md"
 
 components:
   - id: "artifact-taxonomy"
@@ -59,6 +61,10 @@ components:
     kind: "framework"
     source: "docs/composition-scaffolding-and-distribution.md"
     lifecycle: "embedded"
+  - id: "specification-driven-change-control"
+    kind: "protocol"
+    source: "SPEC.md#416-specification-driven-change-control"
+    lifecycle: "embedded"
 
 packages:
   specification:
@@ -69,12 +75,12 @@ packages:
   schema:
     role: "machine-contract"
     version: "1.0.0"
-    source: "schemas/moda.schema.json"
+    source: "schemas/"
     source_kind: "local"
   validator:
-    role: "deterministic-validator"
+    role: "deterministic-validators"
     version: "1.0.0"
-    source: "scripts/validate_moda.py"
+    source: "scripts/"
     source_kind: "local"
   skill:
     role: "portable-agent-skill-core"
@@ -102,4 +108,4 @@ conformance:
 synchronization:
   policy: "docs/synchronization.md"
   state: "review-required"
-  reason: "The pre-tag review expanded the contract and identified validation and distribution work that must pass before a conformant release claim."
+  reason: "The contract has advanced beyond the last audited snapshot with distribution and specification-driven change controls; a new immutable audit is required before a conformant release claim."

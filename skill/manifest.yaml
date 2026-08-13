@@ -24,17 +24,20 @@ knowledge:
     - "docs/conformance-and-audit.md"
     - "docs/synchronization.md"
     - "docs/composition-scaffolding-and-distribution.md"
+    - "docs/change-management.md"
+    - "docs/git-and-release-workflow.md"
     - "docs/evaluation-and-safety.md"
 
 synchronization:
   state: "review-required"
-  reason: "The contract now covers composition, scaffolding, distribution, and update awareness; the skill remains pinned to the last audited snapshot until the next release review."
+  reason: "The contract now covers composition, scaffolding, distribution, update awareness, and specification-driven change control; the skill remains pinned to the last audited snapshot until the next release review."
   audit_triggers:
     - "framework-version-change"
     - "normative-specification-change"
     - "knowledge-entrypoint-change"
     - "skill-procedure-change"
     - "schema-or-template-change"
+    - "change-impact-or-release-workflow-change"
   periodic_review: "P90D"
 
 installation:

@@ -60,10 +60,10 @@ controls:
     gaps: ["Host-specific ChatGPT, Claude, and other distribution packages and their end-to-end installation/update fixtures are roadmap work."]
   evolution:
     status: "satisfied"
-    evidence: ["CHANGELOG.md", "ROADMAP.md", "decisions/", "UPGRADE.md", "MIGRATIONS.md", "SPEC.md#9-semantic-versioning"]
+    evidence: ["CHANGELOG.md", "ROADMAP.md", "decisions/", "changes/", "docs/change-management.md", "docs/git-and-release-workflow.md", "UPGRADE.md", "MIGRATIONS.md", "SPEC.md#9-semantic-versioning"]
   repository_contract:
     status: "partial"
-    evidence: ["README.md", "AGENTS.md", "moda.yaml", "CHANGELOG.md", "ROADMAP.md", "decisions/", "docs/repository-contract.md"]
+    evidence: ["README.md", "AGENTS.md", "moda.yaml", "CHANGELOG.md", "ROADMAP.md", "decisions/", "changes/", "docs/repository-contract.md", "scripts/validate_change.py", "tests/test_validate_change.py"]
     gaps: ["The expanded repository contract and its negative fixtures await the next immutable release audit."]
 
 exceptions: []

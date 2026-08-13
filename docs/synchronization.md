@@ -27,7 +27,9 @@ Remote sources also declare repository, ref or release, and immutable commit. In
 
 ## Update rule
 
-An update compares changes, classifies compatibility, updates affected packages, runs validation, records adopter actions, and obtains human approval. No package silently rewrites another package's authored content.
+An update starts with a MODA Change Set, compares the Git diff, classifies compatibility, updates or explicitly reviews affected surfaces, runs declared validation, records adopter actions, and obtains human approval. No package silently rewrites another package's authored content.
+
+A rule change is not synchronized merely because all referenced files exist. The impact declaration and review must account for semantic projections such as skills, knowledge entrypoints, schemas, templates, examples, adapters, and conformance evidence.
 
 ## Runtime skill check
 

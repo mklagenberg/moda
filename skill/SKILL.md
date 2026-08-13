@@ -1,6 +1,6 @@
 ---
 name: moda
-description: Design, classify, audit, normalize, package, and evolve agentic methodologies and standalone methodology frameworks using MODA. Use when creating a methodology from human practice, identifying artifact types, assessing MODA conformance, creating repository contracts and manifests, planning retrospective normalization, checking methodology-skill-knowledge synchronization, or preparing upgrades and releases.
+description: Design, classify, audit, normalize, package, and evolve agentic methodologies and standalone methodology frameworks using MODA. Use when creating a methodology from human practice, identifying artifact types, assessing MODA conformance, creating repository contracts and manifests, planning retrospective normalization, governing specification-driven changes, checking methodology-skill-knowledge synchronization, or preparing upgrades and releases.
 ---
 
 # MODA
@@ -27,6 +27,7 @@ The canonical knowledge source is `https://github.com/mklagenberg/moda`. The ski
 - Audit or map conformance → read `references/audit-workflow.md`.
 - Add repository entry points, manifest, disclosures, or packaging → read `references/repository-workflow.md`.
 - Design or audit scaffolds, portable skills, host adapters, distribution packages, installation, or update checks → read `references/distribution-workflow.md`.
+- Change a specification, skill, manifest, schema, repository path, package contract, security behavior, or release state → read `references/change-workflow.md`.
 - Resolve version or knowledge drift → retrieve canonical `docs/synchronization.md` at the knowledge snapshot declared in `manifest.yaml`.
 - Prepare an upgrade or release → read canonical `UPGRADE.md`, `MIGRATIONS.md`, and `CHANGELOG.md`.
 
@@ -36,6 +37,7 @@ The canonical knowledge source is `https://github.com/mklagenberg/moda`. The ski
 - Keep framework, methodology, method, process, procedure, workflow, prompt, skill, toolkit, and implementation distinct.
 - Separate identity declaration, conformance mapping, and audit evidence.
 - Point to authoritative evidence instead of copying normative rules.
+- Classify substantive evolution and validate its Change Set against the actual diff.
 - Classify consequential work as deterministic, agent-reasoned, tool-executed, human-decided, or hybrid.
 - Keep stable core contracts separate from vendor- or model-specific adapters.
 - Preserve user-authored content and existing repository conventions unless an approved migration changes them.

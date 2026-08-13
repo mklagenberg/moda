@@ -132,6 +132,14 @@ Define versioning, changelog policy, roadmap governance, decision records, upgra
 
 An actively developed standalone methodology or framework MUST maintain a root `ROADMAP.md`. It MUST distinguish direction from delivery commitments and MUST NOT duplicate the detailed backlog or delivered changelog.
 
+### 4.16 Specification-driven change control
+
+Treat a substantive repository change as a change to a system of contracts. Classify work as `editorial`, `operational`, or `normative` before implementation. Operational and normative changes MUST provide a human-readable proposal and a machine-readable impact declaration that identifies SemVer effect, change triggers, affected surfaces, validation, migration, and recovery.
+
+A normative change MUST update the authoritative specification. A structural change MUST record its durable rationale in a Decision Record. Changes to a public path, package contract, security behavior, or release state MUST explicitly review the dependent entrypoints, manifests, skills, references, schemas, validators, tests, templates, examples, changelog, upgrade guidance, migrations, and conformance evidence applicable to that trigger.
+
+An unchanged surface MUST be marked `reviewed` or `not-applicable` with rationale. Passing deterministic validation does not prove semantic synchronization; human review remains responsible for intent, compatibility, evaluation sufficiency, and credible non-applicability.
+
 ## 5. Repository contract
 
 Every standalone conforming repository MUST provide:
@@ -147,6 +155,8 @@ Every standalone conforming repository MUST provide:
 - an upgrade path for backward-compatible adopter actions;
 - migration guidance for incompatible releases;
 - durable decision records for structural choices;
+- a change-management policy for operational and normative work;
+- a Git and release workflow when Git provides repository provenance;
 - a conformance mapping and latest audit reference.
 
 Supporting capabilities MAY share a file when the repository is small, but `moda.yaml` MUST point to their authoritative location.
@@ -168,6 +178,12 @@ The literal `README.md`, `AGENTS.md`, `moda.yaml`, and `CHANGELOG.md` files are 
 ### 5.4 Progressive disclosure
 
 Entry points MUST remain navigational. Detailed domain knowledge SHOULD live in linked authoritative files and SHOULD NOT be duplicated into `AGENTS.md`, README disclosures, prompts, or audit reports.
+
+### 5.5 Change traceability
+
+Operational and normative repository changes MUST retain a change proposal and impact declaration under a dedicated path or an equivalent mapped change-management system. The impact declaration MUST distinguish `updated`, `reviewed`, and `not-applicable` surfaces. Automated validation SHOULD compare declared updated paths with the actual version-control diff.
+
+Change-specific reasoning does not replace Decision Records. Accepted audits remain immutable evidence; completed changes update the changelog; future work belongs in the roadmap or an external tracker.
 
 ## 6. Adoption relationships
 
@@ -214,6 +230,8 @@ A distributed skill MUST declare its own version, methodology compatibility rang
 
 Missing provenance produces `unknown` synchronization state. A tool MUST NOT silently assume that equal version strings imply equal content.
 
+Release provenance distinguishes the frozen `content_commit` evaluated by an audit from its descendant `release_commit`, which adds only accepted audit evidence and release metadata. A release tag points to the `release_commit`. Any implementation change after the content freeze invalidates the candidate evidence and requires affected validation and audit to run again.
+
 ## 9. Semantic Versioning
 
 MODA and MODA-conforming versioned artifacts SHOULD use full Semantic Versioning, including prerelease and build metadata when applicable:
@@ -222,11 +240,13 @@ MODA and MODA-conforming versioned artifacts SHOULD use full Semantic Versioning
 - MINOR when a backward-compatible capability is added;
 - PATCH when a fix or clarification adds no required behavior.
 
-Every release MUST update its changelog. A release tag MUST NOT be created before the declared release gate passes.
+Every release MUST update its changelog. Release tags SHOULD use `vX.Y.Z`, SHOULD be annotated and signed when supported by the trust model, and MUST be immutable after publication. A release tag MUST NOT be created before the declared release gate passes and explicit human approval is recorded.
 
 ## 10. Change and migration safety
 
 Automated tools MUST NOT silently overwrite user-authored methodology content, accept risk, resolve substantive ambiguity, or apply incompatible migration. They MAY generate a plan, deterministic report, or proposed patch for human review.
+
+Shared release history MUST NOT be rewritten to conceal or replace an accepted change, audit, or tag. Recovery SHOULD use a revert, forward fix, superseding audit, deprecation notice, or new release version as appropriate.
 
 ## 11. Client-zero requirement
 

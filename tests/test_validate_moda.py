@@ -95,6 +95,19 @@ class ValidateModaTests(unittest.TestCase):
             findings = validate_repository(candidate)
         self.assertTrue(any(item.code == "missing-literal-artifact" and item.path == "CHANGELOG.md" for item in findings))
 
+    def test_missing_change_management_documentation_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            candidate = self.copy_repository(directory)
+            manifest = candidate / "moda.yaml"
+            manifest.write_text(
+                manifest.read_text(encoding="utf-8").replace(
+                    '  change_management: "docs/change-management.md"\n', "", 1
+                ),
+                encoding="utf-8",
+            )
+            findings = validate_repository(candidate)
+        self.assertTrue(any(item.code in {"missing-key", "schema-required"} for item in findings))
+
     def test_broken_markdown_evidence_anchor_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             candidate = self.copy_repository(directory)

@@ -35,6 +35,8 @@ documentation:
   upgrade: "UPGRADE.md"
   migrations: "MIGRATIONS.md"
   decisions: "decisions/"
+  change_management: "docs/change-management.md"
+  git_workflow: "docs/git-and-release-workflow.md"
 
 components: []
 packages:

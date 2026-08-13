@@ -38,6 +38,8 @@ The initial release remains blocked until this contract, its fixtures, and its c
 
 **Status:** implemented; immutable release audit pending
 
+The implementation now includes specification-driven Change Sets and differential impact validation; the final release audit remains pending.
+
 ## Later
 
 ### Community conformance exchange

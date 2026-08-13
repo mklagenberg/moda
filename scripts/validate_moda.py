@@ -216,7 +216,7 @@ def validate_repository(root: Path, schema_path: Path | None = None) -> list[Fin
     require_keys(moda, ["manifest_version", "repository", "compatibility", "verified_against", "verified_commit"], "moda.yaml:moda", findings)
     require_keys(artifact, ["id", "name", "kind", "version", "status", "language", "repository", "license"], "moda.yaml:artifact", findings)
     require_keys(adoption, ["relationship", "mode", "claim_stage", "conformance_result"], "moda.yaml:adoption", findings)
-    require_keys(documentation, ["human_entrypoint", "agent_entrypoint", "specification", "getting_started", "invariants", "changelog", "roadmap", "upgrade", "migrations", "decisions"], "moda.yaml:documentation", findings)
+    require_keys(documentation, ["human_entrypoint", "agent_entrypoint", "specification", "getting_started", "invariants", "changelog", "roadmap", "upgrade", "migrations", "decisions", "change_management", "git_workflow"], "moda.yaml:documentation", findings)
     require_keys(conformance, ["profile", "latest_audit", "audit_mode"], "moda.yaml:conformance", findings)
     require_keys(synchronization, ["policy", "state", "reason"], "moda.yaml:synchronization", findings)
 

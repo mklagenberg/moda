@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -22,5 +24,16 @@ jobs:
         run: python scripts/validate_moda.py .
       - name: Validate minimal methodology example
         run: python scripts/validate_moda.py examples/minimal-methodology
+      - name: Resolve change validation base
+        id: change-base
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "sha=${{ github.event.pull_request.base.sha }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "sha=${{ github.event.before }}" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Validate Change Sets against diff
+        run: python scripts/validate_change.py --base "${{ steps.change-base.outputs.sha }}" --head "$GITHUB_SHA"
       - name: Run validator tests
         run: python -m unittest discover -s tests -v

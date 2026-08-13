@@ -32,6 +32,8 @@ Create the human, agent, and machine entry points:
 
 Map the normative specification, onboarding, invariants, upgrade path, migrations, decisions, conformance profile, and audit history in `moda.yaml`.
 
+Document how operational and normative changes are proposed, reviewed, validated against a diff, and released through immutable Git history.
+
 ## 5. Add MODA disclosure
 
 Add the standard disclosure block to `README.md` and `AGENTS.md`. Link to the official MODA repository and the local conformance files.
@@ -50,6 +52,12 @@ If the methodology produces instances, define one scaffold engine with explicit 
 
 If the methodology has a skill, toolkit, templates, adapters, distribution packages, or knowledge base, declare their roles, source topology, compatibility, provenance, and synchronization rules. Keep portable skill semantics separate from host adapters, and define first-activation update and security checks without allowing silent self-update.
 
-## 9. Verify before release
+## 9. Govern substantive changes
 
-Run deterministic validation, execute representative evaluations, review unresolved findings, update the changelog and upgrade guidance, and obtain human approval before tagging a release.
+Classify changes as editorial, operational, or normative. For operational and normative work, create a MODA Change Set from `templates/change-proposal.md` and `templates/change-impact.yaml`. Declare affected surfaces, SemVer impact, validation, migration, and recovery before treating the change as complete.
+
+Use short-lived branches and pull requests. Keep `main` as the permanent integration branch by default. Never move or reuse a published release tag.
+
+## 10. Verify before release
+
+Freeze a content commit, run deterministic validation and representative evaluations, review unresolved findings, and audit that immutable content. Add only accepted evidence and release metadata in a release commit, verify the evidence-only diff, update changelog and migration guidance, and obtain human approval before tagging the release commit.

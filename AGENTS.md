@@ -14,6 +14,8 @@ Load only the context required for the current task:
 6. Read the current conformance profile and latest audit when changing MODA structure.
 7. Read the current changelog and upgrade guidance when changing released behavior.
 8. Read `ROADMAP.md` when changing product direction or introducing a new distribution capability.
+9. Read `docs/change-management.md` and the active Change Set before operational or normative work.
+10. Read `docs/git-and-release-workflow.md` before changing branches, tags, or release evidence.
 
 Do not turn this file into an encyclopedia. Detailed knowledge belongs in linked documentation.
 
@@ -47,7 +49,10 @@ Do not introduce a requirement that this repository silently violates.
 
 ## Change protocol
 
-- Use a short-lived branch and a pull request for normal changes.
+- Classify work as editorial, operational, or normative before implementation.
+- Create `changes/<change-id>/proposal.md` and `impact.yaml` for operational or normative changes.
+- Change the authoritative specification first when obligations change.
+- Use a short-lived branch and a pull request for normal changes; keep `main` as the single permanent integration branch unless a documented need proves otherwise.
 - Keep commits small, coherent, and reviewable.
 - Update `CHANGELOG.md` for notable behavior or contract changes.
 - Record durable structural choices under `decisions/`.
@@ -55,7 +60,8 @@ Do not introduce a requirement that this repository silently violates.
 - Update `UPGRADE.md` for adopter action required by a backward-compatible release.
 - Update `MIGRATIONS.md` for incompatible changes.
 - Assess effects on schemas, templates, examples, validators, skill guidance, and conformance fixtures.
-- Do not create or move a release tag until the release gate passes and a human approves the release.
+- Run differential change validation against the pull-request base.
+- Do not create, move, or reuse a release tag until the release gate passes and a human approves the release.
 
 ## Versioning
 
@@ -75,4 +81,5 @@ A change is complete only when:
 - relevant validation has run;
 - evidence and deviations are recorded;
 - affected documentation and generated disclosures are synchronized;
+- the Change Set agrees with the actual diff and records reviewed or non-applicable surfaces with rationale;
 - no unresolved critical finding is hidden.

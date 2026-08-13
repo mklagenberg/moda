@@ -19,11 +19,14 @@ MODA follows Semantic Versioning. A fix is released as a PATCH version when it a
 - Source topology and distribution boundaries, scaffold profiles and generated-file ownership, portable skill adapters, first-activation update awareness, and roadmap governance.
 - Root roadmap with portable ChatGPT, Claude, and other host skill packages as the first active outcome.
 - Composition, scaffolding, distribution, and runtime update contracts with reusable templates.
+- Specification-driven Change Sets, impact schema, differential validator, Git/release workflow, and pull-request template.
+- Decision Records for substantive change control and non-circular release evidence.
 
 ### Changed
 
 - Returned the client-zero claim to `mapped` and `partial` while the expanded pre-release contract is implemented and audited.
 - Required literal evolution artifacts instead of allowing generic documentation mappings to satisfy changelog, roadmap, or Decision Record controls.
+- Required operational and normative changes to declare SemVer impact, affected contract surfaces, validation, migration, and recovery.
 
 ## [1.0.0] - Unreleased
 

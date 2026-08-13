@@ -32,6 +32,8 @@ documentation:
   upgrade: "README.md"
   migrations: "README.md"
   decisions: "decisions/"
+  change_management: "docs/change-management.md"
+  git_workflow: "docs/change-management.md#git-and-releases"
 
 components: []
 packages:
