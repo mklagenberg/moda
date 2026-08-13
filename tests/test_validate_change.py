@@ -15,6 +15,7 @@ from scripts.validate_change import parse_name_status, select_nearest_impact, va
 
 IMPACT = Path("changes/0011-specification-driven-change-control/impact.yaml")
 AGENT_IMPACT = Path("changes/0013-agent-validation-and-release-gates/impact.yaml")
+RELEASE_DIFF_IMPACT = Path("changes/0015-release-evidence-diff-gate/impact.yaml")
 
 
 class ValidateChangeTests(unittest.TestCase):
@@ -49,6 +50,11 @@ class ValidateChangeTests(unittest.TestCase):
         errors = [finding for finding in validate_impact(ROOT, ROOT / AGENT_IMPACT, changed) if finding.severity == "error"]
         self.assertEqual([], errors, "\n".join(f"{item.code}: {item.message}" for item in errors))
 
+    def test_release_evidence_diff_change_set_is_valid(self) -> None:
+        changed = self.declared_changed_files(ROOT, RELEASE_DIFF_IMPACT)
+        errors = [finding for finding in validate_impact(ROOT, ROOT / RELEASE_DIFF_IMPACT, changed) if finding.severity == "error"]
+        self.assertEqual([], errors, "\n".join(f"{item.code}: {item.message}" for item in errors))
+
     def test_claude_entrypoint_is_a_protected_surface(self) -> None:
         findings = validate_changes(ROOT, {"CLAUDE.md"})
         self.assertTrue(any(item.code == "missing-change-set" for item in findings))
@@ -65,6 +71,19 @@ class ValidateChangeTests(unittest.TestCase):
 
     def test_protected_change_without_change_set_is_rejected(self) -> None:
         findings = validate_changes(ROOT, {"SPEC.md"})
+        self.assertTrue(any(item.code == "missing-change-set" for item in findings))
+
+    def test_evidence_only_release_diff_is_delegated_without_change_set(self) -> None:
+        findings = validate_changes(ROOT, {
+            "audits/moda/release.yaml",
+            "conformance/moda.yaml",
+            "moda.yaml",
+            "skill/manifest.yaml",
+        })
+        self.assertEqual([], findings)
+
+    def test_mixed_release_diff_still_requires_change_set(self) -> None:
+        findings = validate_changes(ROOT, {"moda.yaml", "SPEC.md"})
         self.assertTrue(any(item.code == "missing-change-set" for item in findings))
 
     def test_impact_without_proposal_is_rejected(self) -> None:

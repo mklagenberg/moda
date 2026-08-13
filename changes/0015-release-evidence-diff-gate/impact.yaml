@@ -1,0 +1,47 @@
+change:
+  id: "0015-release-evidence-diff-gate"
+  title: "Delegate evidence-only release diffs"
+  class: "operational"
+  semver: "patch"
+  status: "implemented"
+  structural: false
+  summary: "Delegate pure release-evidence diffs to the release validator without weakening mixed-diff Change Set enforcement."
+
+git:
+  base_ref: "75a3277a199c7da6114d2380017481ad45119e78"
+  target_branch: "main"
+
+triggers:
+  normative_rule: false
+  public_path: false
+  package_contract: false
+  security_behavior: false
+  release: false
+
+affected:
+  specification: {status: "reviewed", paths: ["SPEC.md"], rationale: "The existing evidence-only release obligation is unchanged."}
+  decisions: {status: "reviewed", paths: ["decisions/0012-content-and-release-commits.md", "decisions/0015-release-gates-and-mcp-handoff.md"], rationale: "The correction implements existing decisions without introducing a new structural choice."}
+  documentation: {status: "reviewed", paths: ["docs/change-management.md", "docs/git-and-release-workflow.md"], rationale: "The documented separation between normal Change Sets and evidence-only release commits already defines the intended behavior."}
+  entrypoints: {status: "not-applicable", paths: [], rationale: "No discovery or public entrypoint behavior changes."}
+  manifests: {status: "reviewed", paths: ["moda.yaml", "skill/manifest.yaml"], rationale: "Manifest contracts are unchanged; they are only recognized as release evidence in a pure diff."}
+  skill: {status: "reviewed", paths: ["skill/SKILL.md", "skill/references/release-workflow.md"], rationale: "Existing release guidance already delegates readiness to the release validator."}
+  schemas: {status: "reviewed", paths: ["schemas/change-impact.schema.json", "schemas/moda.schema.json"], rationale: "No schema shape or validation rule changes."}
+  validators: {status: "updated", paths: ["scripts/validate_change.py"]}
+  tests: {status: "updated", paths: ["tests/test_validate_change.py"]}
+  ci: {status: "reviewed", paths: [".github/workflows/validate.yml"], rationale: "The workflow remains unchanged and receives the corrected deterministic result."}
+  templates: {status: "reviewed", paths: ["templates/release-handoff.md"], rationale: "Human handoff fields and scaffold behavior are unchanged."}
+  examples: {status: "reviewed", paths: ["examples/minimal-methodology/"], rationale: "The representative methodology fixture is unaffected."}
+  changelog: {status: "reviewed", paths: ["CHANGELOG.md"], rationale: "This pre-tag CI correction completes the already documented release gate rather than adding a notable public capability."}
+  upgrade: {status: "not-applicable", paths: [], rationale: "No adopter action is required."}
+  migrations: {status: "not-applicable", paths: [], rationale: "No compatibility boundary or stored content changes."}
+  roadmap: {status: "not-applicable", paths: [], rationale: "Product direction is unchanged."}
+  conformance: {status: "reviewed", paths: ["conformance/moda.yaml", "audits/moda/"], rationale: "Conformance semantics and evidence content are unchanged."}
+
+validation:
+  commands:
+    - "python scripts/validate_moda.py ."
+    - "python scripts/validate_moda.py examples/minimal-methodology"
+    - "python scripts/validate_change.py --base 75a3277a199c7da6114d2380017481ad45119e78 --head HEAD"
+    - "python -m unittest discover -s tests -v"
+  evidence:
+    - ".github/workflows/validate.yml"

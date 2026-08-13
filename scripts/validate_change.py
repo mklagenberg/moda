@@ -58,6 +58,14 @@ PROTECTED_PREFIXES = tuple(
     sorted({prefix for values in SURFACE_PREFIXES.values() for prefix in values})
 )
 
+RELEASE_EVIDENCE_PREFIXES = (
+    "audits/",
+    "conformance/",
+    "releases/",
+    "moda.yaml",
+    "skill/manifest.yaml",
+)
+
 
 @dataclass
 class Finding:
@@ -354,6 +362,12 @@ def discover_impacts(root: Path, changed_files: set[str]) -> list[Path]:
 
 
 def change_set_required(changed_files: Iterable[str]) -> bool:
+    changed_files = tuple(changed_files)
+    if changed_files and all(
+        any(path_matches(path, prefix) for prefix in RELEASE_EVIDENCE_PREFIXES)
+        for path in changed_files
+    ):
+        return False
     return any(
         not path.startswith("changes/") and any(path_matches(path, prefix) for prefix in PROTECTED_PREFIXES)
         for path in changed_files
